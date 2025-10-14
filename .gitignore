@@ -1,6 +1,7 @@
 # Gradle files
 .gradle/
-build/
+**/build/
+!**/src/**/build/
 
 # Local configuration file (sdk path, etc)
 local.properties
@@ -17,6 +18,12 @@ local.properties
 # Android/Studio generated files
 captures/
 .externalNativeBuild
+
+# Eclipse Gradle plugin generated files
+# Eclipse Core
+.project
+# JDT-specific (Eclipse Java Development Tools)
+.classpath
 
 # Jetpack Compose
 
