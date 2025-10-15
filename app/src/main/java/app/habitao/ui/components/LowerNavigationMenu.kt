@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.sp
 import app.habitao.R
 import app.habitao.ui.theme.IconNonActive
 import app.habitao.ui.theme.IconTextNonActive
-import app.habitao.ui.theme.LowerMenuBackground
+import app.habitao.ui.theme.LowerMenuBackgroundNonActive
 import app.habitao.ui.theme.Manrope
 
 @Composable
@@ -29,7 +29,7 @@ fun LowerNavigationMenu() {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .background(LowerMenuBackground)
+            .background(LowerMenuBackgroundNonActive)
             .padding(vertical = 12.dp),
         horizontalArrangement = Arrangement.SpaceEvenly,
         verticalAlignment = Alignment.CenterVertically
@@ -45,9 +45,9 @@ fun LowerNavigationMenu() {
             name = "Stats"
         )
         IconButtonWithImage(
-            drawableId = R.drawable.settings_icon,
-            contentDescription = "Settings icon",
-            name = "Settings"
+            drawableId = R.drawable.dojo_icon,
+            contentDescription = "Dojo icon",
+            name = "Dojo"
         )
     }
 }
