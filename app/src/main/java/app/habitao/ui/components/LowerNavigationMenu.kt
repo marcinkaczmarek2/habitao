@@ -45,6 +45,11 @@ fun LowerNavigationMenu() {
             name = "Stats"
         )
         IconButtonWithImage(
+            drawableId = R.drawable.settings_icon,
+            contentDescription = "Settings icon",
+            name = "Settings"
+        )
+        IconButtonWithImage(
             drawableId = R.drawable.dojo_icon,
             contentDescription = "Dojo icon",
             name = "Dojo"
