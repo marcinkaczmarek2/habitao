@@ -1,19 +1,34 @@
 package app.habitao
 
-import android.os.Bundle
-import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import app.habitao.ui.screens.MainScreen
+import android.os.Bundle
+import androidx.activity.ComponentActivity
+import androidx.compose.ui.graphics.toArgb
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import app.habitao.ui.screens.DojoScreenInitialize
+import app.habitao.ui.screens.StatsScreenInitialize
+import app.habitao.ui.screens.HabitsScreenInitialize
+import app.habitao.ui.screens.SettingsScreenInitialize
 import app.habitao.ui.theme.HabitaoTheme
+import app.habitao.ui.theme.MainBackgroundColor
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        window.decorView.setBackgroundColor(MainBackgroundColor.toArgb()) //MOZE PSUC ZMIANE EKRANOW W LIGHT MODE
         setContent {
             HabitaoTheme {
-                MainScreen()
+                val navController = rememberNavController()
+                NavHost(navController = navController, startDestination = "habits") {
+                    composable("habits") { HabitsScreenInitialize(navController) }
+                    composable("stats") { StatsScreenInitialize(navController) }
+                    composable("settings") { SettingsScreenInitialize(navController) }
+                    composable("dojo") { DojoScreenInitialize(navController) }
+                }
             }
         }
     }
