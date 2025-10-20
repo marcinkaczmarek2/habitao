@@ -1,10 +1,10 @@
 package app.habitao.ui.components
 
+import android.annotation.SuppressLint
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.gestures.animateScrollBy
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.lazy.LazyRow
@@ -15,29 +15,28 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.YearMonth
-import java.time.format.TextStyle
-import java.util.*
 import app.habitao.R
 import kotlin.math.abs
-import kotlin.math.round
 
-
+@SuppressLint("FrequentlyChangingValue")
+@Preview
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun CalendarView() {
     var selectedDate by remember { mutableStateOf(LocalDate.now()) }
     var showDialog by remember { mutableStateOf(false) }
+    var isProgramScroll by remember { mutableStateOf(true) }
+    var isStart by remember { mutableStateOf(true) }
+
 
     val currentMonth = selectedDate.month
     val currentYear = selectedDate.year
@@ -55,6 +54,8 @@ fun CalendarView() {
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
+                modifier = Modifier
+                    .padding(start = 5.dp),
                 text = "$currentMonth $currentYear",
                 fontSize = 24.sp,
                 fontWeight = FontWeight.SemiBold,
@@ -72,37 +73,43 @@ fun CalendarView() {
 
         val daysInMonth = YearMonth.of(selectedDate.year, selectedDate.month).lengthOfMonth()
         val days = (1..daysInMonth).toList()
-
+        val paddedDays = listOf<Int?>(null, null) + days + listOf(null, null)
         val listState = rememberLazyListState()
         val coroutineScope = rememberCoroutineScope()
 
-        LaunchedEffect(selectedDate) {
-            val index = selectedDate.dayOfMonth - 3
-            coroutineScope.launch {
-                listState.animateScrollToItem(index)
-            }
-        }
 
         LaunchedEffect(listState.isScrollInProgress) {
             snapshotFlow { listState.isScrollInProgress }
                 .collect { isScrolling ->
-                    if (!isScrolling) {
-                        val visibleItems = listState.layoutInfo.visibleItemsInfo
-                        if (visibleItems.isNotEmpty()) {
-                            val viewportStart = listState.layoutInfo.viewportStartOffset.toFloat()
-                            val viewportEnd = listState.layoutInfo.viewportEndOffset.toFloat()
-                            val viewportCenter = (viewportStart + viewportEnd) / 2f
+                    if (isStart) {
+                        listState.animateScrollToItem(selectedDate.dayOfMonth - 1)
+                        isStart = false
+                    } else {
+                        if (!isScrolling) {
+                            if (!isProgramScroll) {
+                                val visibleItems = listState.layoutInfo.visibleItemsInfo
+                                if (visibleItems.isNotEmpty()) {
+                                    val viewportStart =
+                                        listState.layoutInfo.viewportStartOffset.toFloat()
+                                    val viewportEnd = listState.layoutInfo.viewportEndOffset.toFloat()
+                                    val viewportCenter = (viewportStart + viewportEnd) / 2f
 
-                            val closest = visibleItems.minByOrNull { item ->
-                                val itemCenter = item.offset + item.size / 2
-                                abs(itemCenter - viewportCenter)
-                            }
-                            closest?.let { item ->
-                                val itemCenter = item.offset + item.size / 2
-                                val offset = itemCenter - viewportCenter
-                                coroutineScope.launch {
-                                    listState.animateScrollBy(offset.toFloat())
+                                    val closest = visibleItems.minByOrNull { item ->
+                                        val itemCenter = item.offset + item.size / 2
+                                        abs(itemCenter - viewportCenter)
+                                    }
+                                    closest?.let { item ->
+                                        val dayValue = paddedDays.getOrNull(item.index)
+                                        if (dayValue != null && dayValue != selectedDate.dayOfMonth) {
+                                            selectedDate = selectedDate.withDayOfMonth(dayValue)
+                                            coroutineScope.launch {
+                                                listState.animateScrollToItem(selectedDate.dayOfMonth - 1)
+                                            }
+                                        }
+                                    }
                                 }
+                            } else {
+                                isProgramScroll = false
                             }
                         }
                     }
@@ -117,7 +124,7 @@ fun CalendarView() {
             horizontalArrangement = Arrangement.spacedBy(22.dp),
             contentPadding = PaddingValues(horizontal = 22.dp)
         ) {
-            itemsIndexed(days) { index, day ->
+            itemsIndexed(paddedDays) { index, day ->
                 val visibleItems = listState.layoutInfo.visibleItemsInfo
                 val centerIndex = if (visibleItems.isNotEmpty()) {
                     val firstVisible = visibleItems.first().index
@@ -135,21 +142,25 @@ fun CalendarView() {
                     modifier = Modifier
                         .size((70 * scale).dp)
                         .background(
-                            if (day == selectedDate.dayOfMonth) Color.White
+                            if (day == null) Color.Transparent
                             else Color.LightGray.copy(alpha = scale * scale * scale),
                             shape = MaterialTheme.shapes.small
                         )
                         .clickable {
-                            selectedDate = selectedDate.withDayOfMonth(day)
-                            coroutineScope.launch {
-                                listState.animateScrollToItem(index)
+                            if (day != null) {
+                                selectedDate = selectedDate.withDayOfMonth(day)
+                                isProgramScroll = true
+                                coroutineScope.launch {
+                                    listState.animateScrollToItem(day - 1)
+                                }
                             }
-                        },
+                      }
+                        ,
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
                         text = day.toString(),
-                        color = if (day == selectedDate.dayOfMonth) Color.Green else Color.Black,
+                        color = if (day == null) Color.Transparent else Color.Black,
                         fontWeight = if (day == selectedDate.dayOfMonth) FontWeight.Bold else FontWeight.Normal,
                         fontSize = (30 * scale).sp
                     )
@@ -157,12 +168,16 @@ fun CalendarView() {
             }
         }
 
-        if (showDialog) {
+            if (showDialog) {
             CalendarDialog(
                 initialDate = selectedDate,
                 onDateSelected = {
+                    isProgramScroll = true
                     selectedDate = it
                     showDialog = false
+                    coroutineScope.launch {
+                        listState.animateScrollToItem(it.dayOfMonth - 1)
+                    }
                 },
                 onDismiss = { showDialog = false }
             )
@@ -170,16 +185,6 @@ fun CalendarView() {
     }
 }
 
-@Preview(showBackground = true)
-@RequiresApi(Build.VERSION_CODES.O)
-@Composable
-fun CalendarDialogPreview() {
-    CalendarDialog(
-        initialDate = LocalDate.now(),
-        onDateSelected = {},
-        onDismiss = {}
-    )
-}
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun CalendarDialog(
@@ -244,14 +249,11 @@ fun CalendarDialog(
                     }
                 }
 
-
                 val firstDayOfWeek = displayedMonth.atDay(1).dayOfWeek.value % 7
-                val lastDayOfWeek =
-                    displayedMonth.atDay(displayedMonth.lengthOfMonth()).dayOfWeek.value % 7
+                val lastDayOfWeek = displayedMonth.atDay(displayedMonth.lengthOfMonth()).dayOfWeek.value % 7
                 val days = (1..displayedMonth.lengthOfMonth()).toList()
                 val paddedStart = List(firstDayOfWeek) { 0 } + days
-                val paddedDays =
-                    if (lastDayOfWeek < 6) paddedStart + List(6 - lastDayOfWeek) { 0 } else paddedStart
+                val paddedDays = if (lastDayOfWeek < 6) paddedStart + List(6 - lastDayOfWeek) { 0 } else paddedStart
                 val rows = paddedDays.chunked(7)
 
                 rows.forEach { week ->
@@ -286,8 +288,6 @@ fun CalendarDialog(
                         }
                     }
                 }
-
-
             }
         },
         containerColor = Color.DarkGray

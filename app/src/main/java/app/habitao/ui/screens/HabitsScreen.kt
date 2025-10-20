@@ -1,5 +1,7 @@
 package app.habitao.ui.screens
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -15,6 +17,7 @@ import app.habitao.ui.components.LowerNavigationMenu
 import app.habitao.ui.theme.IconTextNonActive
 import app.habitao.ui.theme.MainBackgroundColor
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun HabitsScreenInitialize(navController: NavController) {
     Box(
