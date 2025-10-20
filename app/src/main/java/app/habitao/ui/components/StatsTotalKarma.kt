@@ -9,11 +9,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import app.habitao.ui.theme.IconTextActive
+import app.habitao.ui.theme.LowerMenuBackgroundNonActive
+import app.habitao.ui.theme.HeaderColor
 import app.habitao.ui.theme.Manrope
 
 @Composable
@@ -22,14 +23,14 @@ fun StatsTotalKarma() {
         modifier = Modifier
             .fillMaxWidth()
             .height(128.dp)
-            .background(Color( 0xFF1E1E1E))
+            .background(LowerMenuBackgroundNonActive)
         ,
         contentAlignment = Alignment.TopCenter
     ) {
         Text(
             text = "Your Total Karma",
             fontSize = 32.sp,
-            color = Color.White,
+            color = HeaderColor,
             fontFamily = Manrope,
             fontWeight = FontWeight.Bold,
             modifier = Modifier

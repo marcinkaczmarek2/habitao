@@ -12,7 +12,10 @@ val LowerMenuBackgroundActive = Color(0xff483f2b)
 val MainBackgroundColor = Color(0xFF121212)
 
 //elements
-val air = Color(0xFFa8dadc)
-val fire = Color(0xFFe63946)
-val water = Color(0xFF118ab2)
-val earth = Color(0xFF8d8741)
+val AirColor = Color(0xFFa8dadc)
+val FireColor = Color(0xFFe63946)
+val WaterColor = Color(0xFF118ab2)
+val EarthColor = Color(0xFF8d8741)
+
+//stats screen
+val HeaderColor = Color.White

@@ -10,11 +10,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import app.habitao.ui.theme.IconTextActive
 import app.habitao.ui.theme.IconTextNonActive
+import app.habitao.ui.theme.LowerMenuBackgroundNonActive
+import app.habitao.ui.theme.HeaderColor
 import app.habitao.ui.theme.Manrope
 
 @Composable
@@ -24,7 +25,7 @@ fun StatsKarmaProgress() {
             .padding(top = 8.dp)
             .fillMaxWidth()
             .height(100.dp)
-            .background(Color( 0xFF1E1E1E))
+            .background(LowerMenuBackgroundNonActive)
 
         ,
         contentAlignment = Alignment.Center
@@ -33,7 +34,7 @@ fun StatsKarmaProgress() {
             text = "Next Habit Progress",
             fontSize = 20.sp,
             fontFamily = Manrope,
-            color = Color.White,
+            color = HeaderColor,
             modifier = Modifier
                 .align(Alignment.TopStart)
                 .padding(start = 20.dp, top = 12.dp)

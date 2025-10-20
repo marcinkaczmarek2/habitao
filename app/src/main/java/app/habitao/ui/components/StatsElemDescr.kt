@@ -9,11 +9,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import app.habitao.ui.theme.IconTextNonActive
+import app.habitao.ui.theme.LowerMenuBackgroundNonActive
+import app.habitao.ui.theme.HeaderColor
 import app.habitao.ui.theme.Manrope
 
 @Composable
@@ -23,14 +24,14 @@ fun StatsElemDescr() {
             .padding(top = 8.dp)
             .fillMaxWidth()
             .height(128.dp)
-            .background(Color( 0xFF1E1E1E))
+            .background(LowerMenuBackgroundNonActive)
         ,
         contentAlignment = Alignment.TopCenter
     ) {
         Text(
             text = "Your Elements",
             fontSize = 24.sp,
-            color = Color.White,
+            color = HeaderColor,
             fontFamily = Manrope,
             fontWeight = FontWeight.Bold,
             modifier = Modifier
@@ -45,7 +46,7 @@ fun StatsElemDescr() {
             color = IconTextNonActive,
             modifier = Modifier
                 .align(Alignment.TopStart)
-                .padding(start = 12.dp, top = 40.dp)
+                .padding(start = 12.dp, top = 42.dp)
         )
     }
 }

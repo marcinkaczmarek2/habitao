@@ -14,16 +14,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import app.habitao.ui.theme.IconTextNonActive
+import app.habitao.ui.theme.LowerMenuBackgroundNonActive
+import app.habitao.ui.theme.HeaderColor
 import app.habitao.ui.theme.Manrope
-import app.habitao.ui.theme.air
-import app.habitao.ui.theme.earth
-import app.habitao.ui.theme.fire
-import app.habitao.ui.theme.water
+import app.habitao.ui.theme.AirColor
+import app.habitao.ui.theme.EarthColor
+import app.habitao.ui.theme.FireColor
+import app.habitao.ui.theme.WaterColor
 
 @Composable
 fun StatsElemGraphBox() {
@@ -32,14 +33,14 @@ fun StatsElemGraphBox() {
             .padding(top = 8.dp)
             .fillMaxWidth()
             .height(220.dp)
-            .background(Color( 0xFF1E1E1E))
+            .background(LowerMenuBackgroundNonActive)
         ,
         contentAlignment = Alignment.TopCenter
     ) {
         Text(
             text = "Element Distribution",
             fontSize = 20.sp,
-            color = Color.White,
+            color = HeaderColor,
             fontFamily = Manrope,
             fontWeight = FontWeight.Bold,
             modifier = Modifier
@@ -55,25 +56,25 @@ fun StatsElemGraphBox() {
                 .size(160.dp),
             onDraw = {
                 drawArc(
-                    color = air,
+                    color = AirColor,
                     startAngle = 0f,
                     sweepAngle = 70f,
                     useCenter = true,
                 )
                 drawArc(
-                    color = fire,
+                    color = FireColor,
                     startAngle = 70f,
                     sweepAngle = 110f,
                     useCenter = true,
                 )
                 drawArc(
-                    color = water,
+                    color = WaterColor,
                     startAngle = 180f,
                     sweepAngle = 90f,
                     useCenter = true,
                 )
                 drawArc(
-                    color = earth,
+                    color = EarthColor,
                     startAngle = 270f,
                     sweepAngle = 90f,
                     useCenter = true,
@@ -111,7 +112,7 @@ fun StatsElemGraphBox() {
                 )
                 {
                     drawCircle(
-                        color = air,
+                        color = AirColor,
                         radius = 6.dp.toPx(),
                         center = Offset(size.width / 2, size.height / 2)
                     )
@@ -140,7 +141,7 @@ fun StatsElemGraphBox() {
                 )
                 {
                     drawCircle(
-                        color = fire,
+                        color = FireColor,
                         radius = 6.dp.toPx(),
                         center = Offset(size.width / 2, size.height / 2)
                     )
@@ -169,7 +170,7 @@ fun StatsElemGraphBox() {
                 )
                 {
                     drawCircle(
-                        color = water,
+                        color = WaterColor,
                         radius = 6.dp.toPx(),
                         center = Offset(size.width / 2, size.height / 2)
                     )
@@ -198,7 +199,7 @@ fun StatsElemGraphBox() {
                 )
                 {
                     drawCircle(
-                        color = earth,
+                        color = EarthColor,
                         radius = 6.dp.toPx(),
                         center = Offset(size.width / 2, size.height / 2)
                     )
