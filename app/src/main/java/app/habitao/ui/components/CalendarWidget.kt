@@ -18,7 +18,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.launch
@@ -28,11 +27,12 @@ import app.habitao.R
 import kotlin.math.abs
 
 @SuppressLint("FrequentlyChangingValue")
-@Preview
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun CalendarView() {
-    var selectedDate by remember { mutableStateOf(LocalDate.now()) }
+fun CalendarView(
+    selectedDate: LocalDate,
+    onDateSelected: (LocalDate) -> Unit
+) {
     var showDialog by remember { mutableStateOf(false) }
     var isProgramScroll by remember { mutableStateOf(true) }
     var isStart by remember { mutableStateOf(true) }
@@ -78,40 +78,36 @@ fun CalendarView() {
         val coroutineScope = rememberCoroutineScope()
 
 
-        LaunchedEffect(listState.isScrollInProgress) {
+        LaunchedEffect(listState.isScrollInProgress, selectedDate) {
             snapshotFlow { listState.isScrollInProgress }
                 .collect { isScrolling ->
                     if (isStart) {
-                        listState.animateScrollToItem(selectedDate.dayOfMonth - 1)
+                        listState.scrollToItem(selectedDate.dayOfMonth - 1)
                         isStart = false
-                    } else {
-                        if (!isScrolling) {
-                            if (!isProgramScroll) {
-                                val visibleItems = listState.layoutInfo.visibleItemsInfo
-                                if (visibleItems.isNotEmpty()) {
-                                    val viewportStart =
-                                        listState.layoutInfo.viewportStartOffset.toFloat()
-                                    val viewportEnd = listState.layoutInfo.viewportEndOffset.toFloat()
-                                    val viewportCenter = (viewportStart + viewportEnd) / 2f
+                    } else if (!isScrolling && !isProgramScroll) {
+                        val visibleItems = listState.layoutInfo.visibleItemsInfo
+                        if (visibleItems.isNotEmpty()) {
+                            val viewportStart = listState.layoutInfo.viewportStartOffset.toFloat()
+                            val viewportEnd = listState.layoutInfo.viewportEndOffset.toFloat()
+                            val viewportCenter = (viewportStart + viewportEnd) / 2f
 
-                                    val closest = visibleItems.minByOrNull { item ->
-                                        val itemCenter = item.offset + item.size / 2
-                                        abs(itemCenter - viewportCenter)
-                                    }
-                                    closest?.let { item ->
-                                        val dayValue = paddedDays.getOrNull(item.index)
-                                        if (dayValue != null && dayValue != selectedDate.dayOfMonth) {
-                                            selectedDate = selectedDate.withDayOfMonth(dayValue)
-                                            coroutineScope.launch {
-                                                listState.animateScrollToItem(selectedDate.dayOfMonth - 1)
-                                            }
-                                        }
+                            val closest = visibleItems.minByOrNull { item ->
+                                val itemCenter = item.offset + item.size / 2
+                                abs(itemCenter - viewportCenter)
+                            }
+                            closest?.let { item ->
+                                val dayValue = paddedDays.getOrNull(item.index)
+                                if (dayValue != null && dayValue != selectedDate.dayOfMonth) {
+                                    onDateSelected(selectedDate.withDayOfMonth(dayValue))
+
+                                    coroutineScope.launch {
+                                        listState.animateScrollToItem(dayValue - 1)
                                     }
                                 }
-                            } else {
-                                isProgramScroll = false
                             }
                         }
+                    } else if (!isScrolling) {
+                        isProgramScroll = false
                     }
                 }
         }
@@ -148,7 +144,7 @@ fun CalendarView() {
                         )
                         .clickable {
                             if (day != null) {
-                                selectedDate = selectedDate.withDayOfMonth(day)
+                                onDateSelected(selectedDate.withDayOfMonth(day))
                                 isProgramScroll = true
                                 coroutineScope.launch {
                                     listState.animateScrollToItem(day - 1)
@@ -173,7 +169,7 @@ fun CalendarView() {
                 initialDate = selectedDate,
                 onDateSelected = {
                     isProgramScroll = true
-                    selectedDate = it
+                    onDateSelected(it)
                     showDialog = false
                     coroutineScope.launch {
                         listState.animateScrollToItem(it.dayOfMonth - 1)
