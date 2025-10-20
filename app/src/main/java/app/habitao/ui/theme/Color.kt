@@ -10,3 +10,9 @@ val LowerMenuBackgroundNonActive = Color(0xFF1E1E1E)
 val LowerMenuBackgroundActive = Color(0xff483f2b)
 
 val MainBackgroundColor = Color(0xFF121212)
+
+//elements
+val air = Color(0xFFa8dadc)
+val fire = Color(0xFFe63946)
+val water = Color(0xFF118ab2)
+val earth = Color(0xFF8d8741)
