@@ -1,17 +1,21 @@
 package app.habitao.ui.screens
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import app.habitao.ui.components.*
 import app.habitao.ui.components.LowerNavigationMenu
 import app.habitao.ui.theme.IconTextNonActive
+import app.habitao.ui.components.MainDojoBox
 
 @Composable
 fun DojoScreenInitialize(navController: NavController) {
@@ -20,12 +24,40 @@ fun DojoScreenInitialize(navController: NavController) {
             .fillMaxSize()
             .background(Color(0xFF121212))
     ) {
-        Text(
-            text = "dojo",
-            fontSize = 20.sp,
-            color = IconTextNonActive,
-            modifier = Modifier.align(Alignment.Center)
-        )
+
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(horizontal = 16.dp, vertical = 24.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(
+                text = "Dojo",
+                fontSize = 22.sp,
+                color = IconTextNonActive
+            )
+            Spacer(modifier = Modifier.height(20.dp))
+
+            MainDojoBox()
+
+            Spacer(modifier = Modifier.height(30.dp))
+
+            Text(
+                text = "The Four Elements",
+                color = IconTextNonActive,
+                fontSize = 18.sp,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.fillMaxWidth(),
+                textAlign = TextAlign.Start
+            )
+            Spacer(modifier = Modifier.height(5.dp))
+
+            EarthCard()
+            WaterCard()
+            FireCard()
+            AirCard()
+
+        }
 
         Box(
             modifier = Modifier
