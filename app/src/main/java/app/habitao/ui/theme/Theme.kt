@@ -61,6 +61,13 @@ object ElementColors {
     val Aether = Color(0xFFC06C84)
 }
 
+object DojoColors {
+    val CardBackground = Color(0xFF1D232D)
+    val HeadlineCard = Color(0xFFF8FAFC)
+    val TextCard = Color(0xFF6B7788)
+
+}
+
 
 @Composable
 fun HabitaoTheme(

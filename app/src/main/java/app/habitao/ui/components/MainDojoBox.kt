@@ -28,7 +28,7 @@ fun MainDojoBox(
     ) {
         Column(
             modifier = Modifier
-                .padding(40.dp),
+                .padding(horizontal = 40.dp, vertical = 20.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
@@ -37,7 +37,7 @@ fun MainDojoBox(
                 fontWeight = FontWeight.Bold,
                 color = Color(0xFFF8FAFC)
             )
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(6.dp))
             Text(
                 text = "Our philosophy is rooted in the ancient wisdom of the Four Elements, guiding you to cultivate balance and harmony in your daily life." +
                         "By nurturing positive habits and acknowledging areas for growth, you embark on a journey of self-discovery and transformation, creating a life of purpose and well-being",
