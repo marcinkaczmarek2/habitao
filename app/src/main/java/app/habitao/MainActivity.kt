@@ -1,5 +1,7 @@
 package app.habitao
 
+import SettingsNotificationScreenInitialize
+import SettingsPrivacyScreenInitialize
 import android.os.Build
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -13,6 +15,7 @@ import androidx.navigation.compose.rememberNavController
 import app.habitao.ui.screens.DojoScreenInitialize
 import app.habitao.ui.screens.StatsScreenInitialize
 import app.habitao.ui.screens.HabitsScreenInitialize
+import app.habitao.ui.screens.SettingsAccountScreenInitialize
 import app.habitao.ui.screens.SettingsScreenInitialize
 import app.habitao.ui.theme.HabitaoTheme
 import app.habitao.ui.theme.MainBackgroundColor
@@ -30,6 +33,9 @@ class MainActivity : ComponentActivity() {
                     composable("habits") { HabitsScreenInitialize(navController) }
                     composable("stats") { StatsScreenInitialize(navController) }
                     composable("settings") { SettingsScreenInitialize(navController) }
+                    composable("settings_account") { SettingsAccountScreenInitialize(navController) }
+                    composable("settings_notification") { SettingsNotificationScreenInitialize(navController) }
+                    composable("settings_privacy") { SettingsPrivacyScreenInitialize(navController) }
                     composable("dojo") { DojoScreenInitialize(navController) }
                 }
             }

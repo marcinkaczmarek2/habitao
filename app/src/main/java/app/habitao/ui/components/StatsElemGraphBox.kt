@@ -18,7 +18,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import app.habitao.ui.theme.IconTextNonActive
-import app.habitao.ui.theme.LowerMenuBackgroundNonActive
+import app.habitao.ui.theme.PanelBackgroundNonActive
 import app.habitao.ui.theme.HeaderColor
 import app.habitao.ui.theme.Manrope
 import app.habitao.ui.theme.AirColor
@@ -33,7 +33,7 @@ fun StatsElemGraphBox() {
             .padding(top = 8.dp)
             .fillMaxWidth()
             .height(220.dp)
-            .background(LowerMenuBackgroundNonActive)
+            .background(PanelBackgroundNonActive)
         ,
         contentAlignment = Alignment.TopCenter
     ) {

@@ -25,7 +25,7 @@ import app.habitao.ui.theme.IconActive
 import app.habitao.ui.theme.IconNonActive
 import app.habitao.ui.theme.IconTextActive
 import app.habitao.ui.theme.IconTextNonActive
-import app.habitao.ui.theme.LowerMenuBackgroundNonActive
+import app.habitao.ui.theme.PanelBackgroundNonActive
 import app.habitao.ui.theme.Manrope
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
@@ -33,7 +33,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ripple
 import androidx.compose.runtime.remember
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.tooling.preview.Preview
 
 @Composable
 fun LowerNavigationMenu(navController: NavController) {
@@ -48,7 +47,7 @@ fun LowerNavigationMenu(navController: NavController) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .background(LowerMenuBackgroundNonActive)
+            .background(PanelBackgroundNonActive)
             .padding(vertical = 12.dp),
         horizontalArrangement = Arrangement.SpaceEvenly,
         verticalAlignment = Alignment.CenterVertically

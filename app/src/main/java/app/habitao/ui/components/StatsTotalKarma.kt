@@ -13,7 +13,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import app.habitao.ui.theme.IconTextActive
-import app.habitao.ui.theme.LowerMenuBackgroundNonActive
+import app.habitao.ui.theme.PanelBackgroundNonActive
 import app.habitao.ui.theme.HeaderColor
 import app.habitao.ui.theme.Manrope
 
@@ -23,7 +23,7 @@ fun StatsTotalKarma() {
         modifier = Modifier
             .fillMaxWidth()
             .height(128.dp)
-            .background(LowerMenuBackgroundNonActive)
+            .background(PanelBackgroundNonActive)
         ,
         contentAlignment = Alignment.TopCenter
     ) {

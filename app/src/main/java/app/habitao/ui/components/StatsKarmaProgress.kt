@@ -14,7 +14,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import app.habitao.ui.theme.IconTextActive
 import app.habitao.ui.theme.IconTextNonActive
-import app.habitao.ui.theme.LowerMenuBackgroundNonActive
+import app.habitao.ui.theme.PanelBackgroundNonActive
 import app.habitao.ui.theme.HeaderColor
 import app.habitao.ui.theme.Manrope
 
@@ -25,7 +25,7 @@ fun StatsKarmaProgress() {
             .padding(top = 8.dp)
             .fillMaxWidth()
             .height(100.dp)
-            .background(LowerMenuBackgroundNonActive)
+            .background(PanelBackgroundNonActive)
 
         ,
         contentAlignment = Alignment.Center
