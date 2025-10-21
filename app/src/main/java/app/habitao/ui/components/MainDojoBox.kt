@@ -12,6 +12,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import app.habitao.ui.theme.DojoColors
 
 @Composable
 fun MainDojoBox(
@@ -23,7 +24,7 @@ fun MainDojoBox(
             .padding(horizontal = 1.dp),
         shape = MaterialTheme.shapes.medium,
         colors = androidx.compose.material3.CardDefaults.cardColors(
-            containerColor = Color(0xFF1D232D)
+            containerColor = DojoColors.CardBackground
         )
     ) {
         Column(
@@ -35,14 +36,14 @@ fun MainDojoBox(
                 text = "The Way of Balance",
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Bold,
-                color = Color(0xFFF8FAFC)
+                color = DojoColors.HeadlineCard
             )
             Spacer(modifier = Modifier.height(6.dp))
             Text(
                 text = "Our philosophy is rooted in the ancient wisdom of the Four Elements, guiding you to cultivate balance and harmony in your daily life." +
                         "By nurturing positive habits and acknowledging areas for growth, you embark on a journey of self-discovery and transformation, creating a life of purpose and well-being",
                 style = MaterialTheme.typography.bodyMedium,
-                color = Color(0xFF6B7788),
+                color = DojoColors.TextCard,
                 textAlign = TextAlign.Center,
                 lineHeight = 18.sp
             )
