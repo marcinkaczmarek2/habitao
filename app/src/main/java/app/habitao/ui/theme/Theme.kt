@@ -54,11 +54,10 @@ private val LightColorScheme = lightColorScheme(
 )
 
 object ElementColors {
-    val Earth = Color(0xFF8D8741)
+    val Earth = Color(0xFF4B1500)
     val Air = Color(0xFFA8DADC)
-    val Fire = Color(0xFFF77F00)
-    val Water = Color(0xFF06D6A0)
-    val Aether = Color(0xFFC06C84)
+    val Fire = Color(0xFFD70404)
+    val Water = Color(0xFF0472D7)
 }
 
 object DojoColors {
