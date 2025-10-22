@@ -10,6 +10,8 @@ val PanelBackgroundNonActive = Color(0xFF1E1E1E)
 val LowerMenuBackgroundActive = Color(0xff483f2b)
 
 val MainBackgroundColor = Color(0xFF121212)
+val SecondaryColor = Color(0xFF343434)
+
 
 //elements
 val AirColor = Color(0xFFa8dadc)
