@@ -15,9 +15,9 @@ val SecondaryColor = Color(0xFF343434)
 
 //elements
 val AirColor = Color(0xFFa8dadc)
-val FireColor = Color(0xFFe63946)
-val WaterColor = Color(0xFF118ab2)
-val EarthColor = Color(0xFF8d8741)
+val FireColor = Color(0xFFd70404)
+val WaterColor = Color(0xFF066bc7)
+val EarthColor = Color(0xFF611c01)
 
 //stats screen
 val HeaderColor = Color.White
