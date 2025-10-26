@@ -27,7 +27,56 @@ import app.habitao.ui.theme.FireColor
 import app.habitao.ui.theme.WaterColor
 
 @Composable
-fun StatsElemGraphBox() {
+fun StatsElemGraphBox(
+    airPts: Int,
+    firePts: Int,
+    waterPts: Int,
+    earthPts: Int
+) {
+    //Input Control
+    if (airPts < 0 || firePts < 0 || waterPts < 0 || earthPts < 0) {
+        throw IllegalArgumentException("Element points must be non-negative")
+    }
+
+    //total num of points
+    val totalPts: Float = (airPts + firePts + waterPts + earthPts).toFloat()
+
+    //graph angles
+    val airAngle: Float = airPts.toFloat() / totalPts * 360
+    val fireAngle: Float = firePts.toFloat() / totalPts * 360
+    val waterAngle: Float = waterPts.toFloat() / totalPts * 360
+    val earthAngle: Float = earthPts.toFloat() / totalPts * 360
+
+    //graph percentages for adjustment
+    val airRawPct: Float = (airAngle / 360 * 100)
+    val fireRawPct: Float = (fireAngle / 360 * 100)
+    val waterRawPct: Float = (waterAngle / 360 * 100)
+    val earthRawPct: Float = (earthAngle / 360 * 100)
+
+    //adjustment (there won't be 101% or 99% total)
+    val adjustmentSum: Int = airRawPct.toInt() + fireRawPct.toInt() + waterRawPct.toInt() + earthRawPct.toInt()
+    val adjustment: Float = 100f / adjustmentSum.toFloat()
+
+    //adjusted values
+    val airPct: Int = (airRawPct * adjustment).toInt()
+    val firePct: Int = (fireRawPct * adjustment).toInt()
+    val waterPct: Int = (waterRawPct * adjustment).toInt()
+    var earthPct: Int = (earthRawPct * adjustment).toInt()
+
+    //adjustment 2 (if above fails)
+    val elementsIntSum: Int = airPct + firePct + waterPct + earthPct
+
+    if(elementsIntSum == 101) {
+        earthPct -= 1
+    }
+    else if (elementsIntSum == 99) {
+        earthPct += 1
+    }
+
+    //graph rotation
+    val graphInitRot: Float = -90f
+
+    //GUI
     Box(
         modifier = Modifier
             .padding(top = 8.dp)
@@ -57,26 +106,26 @@ fun StatsElemGraphBox() {
             onDraw = {
                 drawArc(
                     color = AirColor,
-                    startAngle = 0f,
-                    sweepAngle = 70f,
+                    startAngle = 0f + graphInitRot,
+                    sweepAngle = airAngle,
                     useCenter = true,
                 )
                 drawArc(
                     color = FireColor,
-                    startAngle = 70f,
-                    sweepAngle = 110f,
+                    startAngle = airAngle + graphInitRot,
+                    sweepAngle = fireAngle,
                     useCenter = true,
                 )
                 drawArc(
                     color = WaterColor,
-                    startAngle = 180f,
-                    sweepAngle = 90f,
+                    startAngle = airAngle + fireAngle + graphInitRot,
+                    sweepAngle = waterAngle,
                     useCenter = true,
                 )
                 drawArc(
                     color = EarthColor,
-                    startAngle = 270f,
-                    sweepAngle = 90f,
+                    startAngle = airAngle + fireAngle + waterAngle + graphInitRot,
+                    sweepAngle = earthAngle,
                     useCenter = true,
                 )
             }
@@ -88,7 +137,6 @@ fun StatsElemGraphBox() {
                 .align(Alignment.TopEnd)
                 .padding(top = 50.dp)
                 .size(130.dp, 160.dp)
-//                            .background(Color.Red)
         )
         {
             Text(
@@ -119,7 +167,7 @@ fun StatsElemGraphBox() {
                 }
 
                 Text(
-                    text = "air (19%)",
+                    text = "air ($airPct%)",
                     fontSize = 14.sp,
                     fontFamily = Manrope,
                     color = IconTextNonActive,
@@ -148,7 +196,7 @@ fun StatsElemGraphBox() {
                 }
 
                 Text(
-                    text = "fire (31%)",
+                    text = "fire ($firePct%)",
                     fontSize = 14.sp,
                     fontFamily = Manrope,
                     color = IconTextNonActive,
@@ -177,7 +225,7 @@ fun StatsElemGraphBox() {
                 }
 
                 Text(
-                    text = "water (25%)",
+                    text = "water ($waterPct%)",
                     fontSize = 14.sp,
                     fontFamily = Manrope,
                     color = IconTextNonActive,
@@ -206,7 +254,7 @@ fun StatsElemGraphBox() {
                 }
 
                 Text(
-                    text = "earth (25%)",
+                    text = "earth ($earthPct%)",
                     fontSize = 14.sp,
                     fontFamily = Manrope,
                     color = IconTextNonActive,

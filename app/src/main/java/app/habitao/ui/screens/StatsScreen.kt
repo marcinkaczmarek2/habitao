@@ -31,10 +31,10 @@ fun StatsScreenInitialize(navController: NavController) {
                 .padding(8.dp, 24.dp)
         ) {
             //total karma
-            StatsTotalKarma()
+            StatsTotalKarma(1300)
 
             //karma progress
-            StatsKarmaProgress()
+            StatsKarmaProgress(300, 1000)
 
             //bonsai tree - decoration
             StatsBonsai()
@@ -43,7 +43,7 @@ fun StatsScreenInitialize(navController: NavController) {
             StatsElemDescr()
 
             //graph box
-            StatsElemGraphBox()
+            StatsElemGraphBox(111, 17, 37, 41)
         }
 
         //bottom menu
