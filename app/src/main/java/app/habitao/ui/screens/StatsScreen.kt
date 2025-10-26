@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import app.habitao.R
 import app.habitao.ui.components.LowerNavigationMenu
 import app.habitao.ui.components.StatsBonsai
 import app.habitao.ui.components.StatsElemDescr
@@ -31,19 +32,21 @@ fun StatsScreenInitialize(navController: NavController) {
                 .padding(8.dp, 24.dp)
         ) {
             //total karma
-            StatsTotalKarma()
+            StatsTotalKarma(1300)
 
             //karma progress
-            StatsKarmaProgress()
+            StatsKarmaProgress(300, 1000)
 
             //bonsai tree - decoration
-            StatsBonsai()
+            //<a href="https://www.flaticon.com/free-icons/bonsai" title="bonsai icons">Bonsai icons created by Ylivdesign - Flaticon</a>
+            //NOTE: I thought we may use a couple versions of images for that (idk - you can rm that)
+            StatsBonsai(R.drawable.bonsai)
 
             //elements description
             StatsElemDescr()
 
             //graph box
-            StatsElemGraphBox()
+            StatsElemGraphBox(111, 172, 37, 41)
         }
 
         //bottom menu

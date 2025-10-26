@@ -18,7 +18,7 @@ import app.habitao.ui.theme.HeaderColor
 import app.habitao.ui.theme.Manrope
 
 @Composable
-fun StatsTotalKarma() {
+fun StatsTotalKarma(totalKarma: Int) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -39,7 +39,7 @@ fun StatsTotalKarma() {
         )
 
         Text(
-            text = "1250",
+            text = totalKarma.toString(),
             fontSize = 40.sp,
             fontFamily = Manrope,
             color = IconTextActive,

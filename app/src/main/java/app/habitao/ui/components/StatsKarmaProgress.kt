@@ -19,7 +19,21 @@ import app.habitao.ui.theme.HeaderColor
 import app.habitao.ui.theme.Manrope
 
 @Composable
-fun StatsKarmaProgress() {
+fun StatsKarmaProgress(karmaProgress: Int, karmaToNextLv: Int) {
+    //input control
+    if (karmaToNextLv < 1) {
+        throw IllegalArgumentException("Karma to next level must be positive");
+    }
+
+    if (karmaProgress < 0) {
+        throw IllegalArgumentException("Karma progress must be non-negative")
+    }
+
+    if (karmaProgress > karmaToNextLv) {
+        throw IllegalArgumentException("Karma progress cannot exceed karma to next level")
+    }
+
+    //GUI
     Box(
         modifier = Modifier
             .padding(top = 8.dp)
@@ -41,7 +55,7 @@ fun StatsKarmaProgress() {
         )
 
         LinearProgressIndicator(
-            progress = { 0.25f },
+            progress = { karmaProgress.toFloat() / karmaToNextLv.toFloat() },
             trackColor = IconTextNonActive,
             color = IconTextActive,
             modifier = Modifier
@@ -51,7 +65,7 @@ fun StatsKarmaProgress() {
         )
 
         Text(
-            text = "250 / 1000 points",
+            text = "$karmaProgress / $karmaToNextLv points",
             fontSize = 18.sp,
             fontFamily = Manrope,
             color = IconTextActive,
