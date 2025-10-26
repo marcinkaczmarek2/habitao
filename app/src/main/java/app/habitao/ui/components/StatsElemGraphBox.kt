@@ -38,6 +38,10 @@ fun StatsElemGraphBox(
         throw IllegalArgumentException("Element points must be non-negative")
     }
 
+    if (airPts == 0 && firePts == 0 && waterPts == 0 && earthPts == 0) {
+        return
+    }
+
     //total num of points
     val totalPts: Float = (airPts + firePts + waterPts + earthPts).toFloat()
 
@@ -58,19 +62,26 @@ fun StatsElemGraphBox(
     val adjustment: Float = 100f / adjustmentSum.toFloat()
 
     //adjusted values
-    val airPct: Int = (airRawPct * adjustment).toInt()
-    val firePct: Int = (fireRawPct * adjustment).toInt()
-    val waterPct: Int = (waterRawPct * adjustment).toInt()
+    var airPct: Int = (airRawPct * adjustment).toInt()
+    var firePct: Int = (fireRawPct * adjustment).toInt()
+    var waterPct: Int = (waterRawPct * adjustment).toInt()
     var earthPct: Int = (earthRawPct * adjustment).toInt()
 
     //adjustment 2 (if above fails)
     val elementsIntSum: Int = airPct + firePct + waterPct + earthPct
+    val adjustment2: Int = 100 - elementsIntSum
 
-    if(elementsIntSum == 101) {
-        earthPct -= 1
+    if(airRawPct > fireRawPct && airRawPct > waterRawPct && airRawPct > earthRawPct) {
+        airPct += adjustment2
     }
-    else if (elementsIntSum == 99) {
-        earthPct += 1
+    else if (fireRawPct > airRawPct && fireRawPct > waterRawPct && fireRawPct > earthRawPct) {
+        firePct += adjustment2
+    }
+    else if (waterRawPct > airRawPct && waterRawPct > fireRawPct && waterRawPct > earthRawPct) {
+        waterPct += adjustment2
+    }
+    else {
+        earthPct += adjustment2
     }
 
     //graph rotation
