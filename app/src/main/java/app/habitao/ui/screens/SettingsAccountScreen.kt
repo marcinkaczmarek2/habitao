@@ -39,7 +39,7 @@ fun SettingsAccountScreenInitialize(navController: NavController) {
                 navController = navController
             )
             Spacer(modifier = Modifier.height(350.dp))
-            SettingsLoginButton()
+            SettingsLoginButton(navController)
         }
 
         Box(
