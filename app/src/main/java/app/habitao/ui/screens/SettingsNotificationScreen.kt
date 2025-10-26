@@ -28,6 +28,7 @@ import app.habitao.ui.components.SettingsBackButton
 import app.habitao.ui.components.SettingsToggleSection
 import app.habitao.ui.components.SettingsTopBar
 import app.habitao.ui.theme.IconTextNonActive
+import app.habitao.ui.theme.MainBackgroundColor
 import kotlin.math.abs
 
 @Composable
@@ -39,7 +40,7 @@ fun SettingsNotificationScreenInitialize(navController: NavController) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFF121212))
+            .background(MainBackgroundColor)
             .padding(horizontal = 16.dp, vertical = 24.dp)
     ) {
 

@@ -68,7 +68,7 @@ fun SettingsScreenInitialize(navController: NavController) {
 
             Spacer(modifier = Modifier.height(40.dp))
             //TODO warunek sprawdzający czy użytkownik jest zalogowany i wyświetlanie odpowiedniego guzika
-            SettingsLoginButton()
+            SettingsLoginButton(navController)
         }
 
         Box(

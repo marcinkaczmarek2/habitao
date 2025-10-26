@@ -15,6 +15,8 @@ import androidx.navigation.compose.rememberNavController
 import app.habitao.ui.screens.DojoScreenInitialize
 import app.habitao.ui.screens.StatsScreenInitialize
 import app.habitao.ui.screens.HabitsScreenInitialize
+import app.habitao.ui.screens.LoginScreenInitialize
+import app.habitao.ui.screens.RegisterScreenInitialize
 import app.habitao.ui.screens.SettingsAccountScreenInitialize
 import app.habitao.ui.screens.SettingsScreenInitialize
 import app.habitao.ui.theme.HabitaoTheme
@@ -37,6 +39,8 @@ class MainActivity : ComponentActivity() {
                     composable("settings_notification") { SettingsNotificationScreenInitialize(navController) }
                     composable("settings_privacy") { SettingsPrivacyScreenInitialize(navController) }
                     composable("dojo") { DojoScreenInitialize(navController) }
+                    composable("register") { RegisterScreenInitialize(navController) }
+                    composable("login") { LoginScreenInitialize(navController) }
                 }
             }
         }
