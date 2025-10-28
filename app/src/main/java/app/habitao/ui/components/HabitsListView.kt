@@ -18,6 +18,8 @@ import app.habitao.ui.theme.AirColor
 import app.habitao.ui.theme.EarthColor
 import app.habitao.ui.theme.FireColor
 import app.habitao.ui.theme.WaterColor
+import app.habitao.ui.theme.Manrope
+import app.habitao.ui.theme.IconTextNonActive
 
 @Composable
 fun HabitsListView(
@@ -31,8 +33,10 @@ fun HabitsListView(
         ) {
             Text(
                 text = "No habits for this day yet",
-                color = Color.LightGray,
+                color = IconTextNonActive,
                 fontStyle = FontStyle.Italic,
+                fontFamily = Manrope,
+                fontWeight = FontWeight.Normal,
                 modifier = Modifier.padding(16.dp)
             )
         }
@@ -77,12 +81,14 @@ fun HabitItem(habit: Habit, onToggle: () -> Unit) {
                 Text(
                     text = habit.name,
                     color = Color.White,
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.Bold,
+                    fontFamily = Manrope
                 )
                 Text(
                     text = habit.description,
                     color = Color.Gray,
-                    style = MaterialTheme.typography.bodySmall
+                    style = MaterialTheme.typography.bodySmall,
+                    fontFamily = Manrope
                 )
             }
 

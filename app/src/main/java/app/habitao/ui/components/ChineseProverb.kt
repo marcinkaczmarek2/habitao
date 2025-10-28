@@ -17,6 +17,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import java.time.LocalDate
+import app.habitao.ui.theme.DancingScript
+import app.habitao.ui.theme.GreatVibes
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
@@ -73,8 +75,8 @@ fun ChineseProverbView(
             modifier = Modifier.padding(horizontal = 16.dp),
             style = MaterialTheme.typography.bodyLarge.copy(
                 color = Color.White,
-                fontSize = 18.sp,
-                fontFamily = FontFamily.Monospace,
+                fontSize = 25.sp,
+                fontFamily = GreatVibes,
                 fontStyle = FontStyle.Normal,
                 fontWeight = FontWeight.Medium,
                 textAlign = TextAlign.Center

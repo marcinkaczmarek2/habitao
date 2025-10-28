@@ -115,3 +115,11 @@ val AppTypography = Typography(
         fontSize = 16.sp
     )
 )
+
+val DancingScript = FontFamily(
+    Font(R.font.dancingscript_regular, FontWeight.Normal )
+)
+
+val GreatVibes = FontFamily(
+    Font(R.font.great_vibes_regular, FontWeight.Normal )
+)

@@ -14,6 +14,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import app.habitao.ui.theme.IconActive
+import app.habitao.ui.theme.Toggle
 import app.habitao.ui.theme.MainBackgroundColor
 
 @Composable
