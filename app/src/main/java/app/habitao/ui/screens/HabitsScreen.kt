@@ -25,15 +25,24 @@ import app.habitao.ui.components.HabitsViewModel
 import app.habitao.ui.theme.MainBackgroundColor
 import com.example.habits.ui.components.ChineseProverbView
 import java.time.LocalDate
+import android.app.Application
+import androidx.lifecycle.ViewModelProvider
+import androidx.compose.ui.platform.LocalContext
+
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun HabitsScreenInitialize(navController: NavController) {
-    val viewModel: HabitsViewModel = viewModel()
+    val context = LocalContext.current
+    val viewModel: HabitsViewModel = viewModel(
+        factory = ViewModelProvider.AndroidViewModelFactory(context.applicationContext as Application)
+    )
+
     var selectedDate by remember { mutableStateOf(LocalDate.now()) }
 
     var showSelection by remember { mutableStateOf(false) }
-    var showDetailDialog by remember { mutableStateOf(false) }
+    var showAdditionDialog by remember { mutableStateOf(false) }
+    var showDetailsDialog by remember { mutableStateOf(false) }
     var selectedHabit by remember { mutableStateOf<Habit?>(null) }
 
     LaunchedEffect(selectedDate) {
@@ -59,8 +68,13 @@ fun HabitsScreenInitialize(navController: NavController) {
 
             HabitsListView(
                 habits = viewModel.habitsForSelectedDate,
-                onToggle = { viewModel.toggleHabitCompletion(it) }
+                onToggle = { viewModel.toggleHabitCompletion(it.id) },
+                onHabitClick = { habit ->
+                    selectedHabit = habit
+                    showDetailsDialog = true
+                }
             )
+
         }
 
         Box(
@@ -87,37 +101,38 @@ fun HabitsScreenInitialize(navController: NavController) {
                 predefinedHabits = viewModel.predefinedHabits,
                 onAddHabitClick = { habit ->
                     selectedHabit = habit
-                    showDetailDialog = true
+                    showAdditionDialog = true
                 },
                 onClose = { showSelection = false }
             )
         }
 
-        if (showDetailDialog && selectedHabit != null) {
-            HabitDetailDialog(
+        if (showAdditionDialog && selectedHabit != null) {
+            HabitAdditionDialog(
                 habit = selectedHabit!!,
                 selectedDate = selectedDate,
                 onConfirm = { newHabit ->
                     viewModel.addHabit(selectedDate, newHabit)
-                    showDetailDialog = false
+                    showAdditionDialog = false
                     showSelection = false
                 },
                 onDismiss = {
-                    showDetailDialog = false
+                    showAdditionDialog = false
+                }
+            )
+        }
+
+        if (showDetailsDialog && selectedHabit != null) {
+            HabitDetailsDialog(
+                habit = selectedHabit!!,
+                onDelete = { habit ->
+                    viewModel.deleteHabit(habit)
+                    showDetailsDialog = false
+                },
+                onDismiss = {
+                    showDetailsDialog = false
                 }
             )
         }
     }
 }
-//ui/
-//├── habits/
-//│    ├── HabitsScreen.kt
-//│    ├── HabitSelectionView.kt
-//│    ├── HabitDetailScreen.kt
-//│    ├── components/
-//│    │    ├── HabitItem.kt
-//│    │    ├── HabitFilterChips.kt
-//│    │    ├── HabitSearchBar.kt
-//│    │    ├── HabitSlider.kt
-//│    └── data/
-//│         └── Habit.kt

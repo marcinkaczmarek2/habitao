@@ -14,7 +14,7 @@ import java.time.LocalDate
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun HabitDetailDialog(
+fun HabitAdditionDialog(
     habit: Habit,
     selectedDate: LocalDate,
     onConfirm: (Habit) -> Unit,

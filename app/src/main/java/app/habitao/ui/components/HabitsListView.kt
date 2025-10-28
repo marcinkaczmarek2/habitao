@@ -1,5 +1,6 @@
 package app.habitao.ui.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
 import androidx.compose.foundation.layout.Column
@@ -24,8 +25,9 @@ import app.habitao.ui.theme.IconTextNonActive
 @Composable
 fun HabitsListView(
     habits: List<Habit>,
-    onToggle: (Habit) -> Unit
-) {
+    onToggle: (Habit) -> Unit,
+    onHabitClick: (Habit) -> Unit
+    ) {
     if (habits.isEmpty()) {
         Box(
             modifier = Modifier.fillMaxWidth(),
@@ -46,14 +48,21 @@ fun HabitsListView(
             contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp)
         ) {
             items(habits) { habit ->
-                HabitItem(habit = habit, onToggle = { onToggle(habit) })
+                HabitItem(
+                    habit = habit,
+                    onClick = { onHabitClick(habit) },
+                    onToggle = { onToggle(habit) })
             }
         }
     }
 }
 
 @Composable
-fun HabitItem(habit: Habit, onToggle: () -> Unit) {
+fun HabitItem(
+    habit: Habit,
+    onToggle: () -> Unit,
+    onClick: () -> Unit
+) {
 
     val elementColor = when (habit.element) {
         Element.FIRE -> FireColor
@@ -65,9 +74,13 @@ fun HabitItem(habit: Habit, onToggle: () -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 6.dp),
+            .padding(vertical = 6.dp)
+            .clickable(onClick = onClick),
         colors = CardDefaults.cardColors(
             containerColor = elementColor.copy(alpha = 0.5f)
+        ),
+        elevation = CardDefaults.cardElevation(
+            defaultElevation = 4.dp
         )
     ) {
         Row(
