@@ -6,7 +6,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -16,13 +15,15 @@ import app.habitao.ui.components.*
 import app.habitao.ui.components.LowerNavigationMenu
 import app.habitao.ui.theme.IconTextNonActive
 import app.habitao.ui.components.MainDojoBox
+import app.habitao.ui.theme.MainBackgroundColor
+import app.habitao.ui.theme.PanelBackgroundNonActive
 
 @Composable
 fun DojoScreenInitialize(navController: NavController) {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFF121212))
+            .background(MainBackgroundColor)
     ) {
 
         Column(

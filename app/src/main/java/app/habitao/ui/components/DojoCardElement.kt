@@ -21,7 +21,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import app.habitao.R
 import app.habitao.ui.theme.DojoColors
-import app.habitao.ui.theme.ElementColors
+import app.habitao.ui.theme.AirColor
+import app.habitao.ui.theme.EarthColor
+import app.habitao.ui.theme.FireColor
+import app.habitao.ui.theme.WaterColor
+import app.habitao.ui.theme.PanelBackgroundNonActive
+import app.habitao.ui.theme.HeaderColor
+import app.habitao.ui.theme.Manrope
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.Color
 
@@ -54,9 +60,10 @@ fun ElementCardDojo(
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(
                     text = title,
+                    fontFamily = Manrope,
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold,
-                    color = DojoColors.HeadlineCard
+                    color = HeaderColor
                 )
             }
 
@@ -64,6 +71,7 @@ fun ElementCardDojo(
 
             Text(
                 text = description,
+                fontFamily = Manrope,
                 style = MaterialTheme.typography.bodyMedium.copy(lineHeight = 15.sp),
                 color = DojoColors.TextCard
             )
@@ -77,7 +85,7 @@ fun EarthCard(modifier: Modifier = Modifier) {
         title = "Earth (土)",
         description = "Represents stability, grounding, and nourishment. Earth habits relate to physical health, nutrition, and connection to nature.",
         iconResId = R.drawable.earth_icon,
-        iconColor = ElementColors.Earth,
+        iconColor = EarthColor,
         modifier = modifier
     )
 }
@@ -88,7 +96,7 @@ fun WaterCard(modifier: Modifier = Modifier) {
         title = "Water (水)",
         description = "Symbolizes flow, adaptability, and emotion. Water habits involve emotional intelligence, creativity, and rest.",
         iconResId = R.drawable.water_icon,
-        iconColor = ElementColors.Water,
+        iconColor = WaterColor,
         modifier = modifier
     )
 }
@@ -99,7 +107,7 @@ fun FireCard(modifier: Modifier = Modifier) {
         title = "Fire (火)",
         description = "Embodies passion, transformation, and energy. Fire habits focus on motivation, career, and personal drive.",
         iconResId = R.drawable.fire_icon,
-        iconColor = ElementColors.Fire,
+        iconColor = FireColor,
         modifier = modifier
     )
 }
@@ -110,7 +118,7 @@ fun AirCard(modifier: Modifier = Modifier) {
         title = "Air (风)",
         description = "Relates to intellect, communication, and clarity. Air habits include learning mindfulness, and social connections.",
         iconResId = R.drawable.air_icon,
-        iconColor = ElementColors.Air,
+        iconColor = AirColor,
         modifier = modifier
     )
 }

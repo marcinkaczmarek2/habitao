@@ -15,6 +15,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import app.habitao.ui.theme.IconTextNonActive
 import app.habitao.ui.theme.PanelBackgroundNonActive
+import app.habitao.ui.theme.IconActive
 
 @Composable
 fun SettingsToggleSection(
@@ -55,7 +56,13 @@ fun SettingsToggleSection(
 
                 Switch(
                     checked = toggles[index],
-                    onCheckedChange = { onToggleChange(index, it) }
+                    onCheckedChange = { onToggleChange(index, it) },
+                    colors = androidx.compose.material3.SwitchDefaults.colors(
+                        checkedIconColor = Color.White,
+                        checkedTrackColor = IconActive,
+                        uncheckedThumbColor = Color.Gray,
+                        uncheckedTrackColor = Color.LightGray
+                    )
                 )
             }
         }

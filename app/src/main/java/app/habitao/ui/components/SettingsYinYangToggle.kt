@@ -43,7 +43,7 @@ fun SettingsYinYangToggle() {
                 .width(70.dp)
                 .height(40.dp)
                 .clip(RoundedCornerShape(20.dp))
-                .background(IconActive.copy(alpha = 0.8f))
+                .background(IconActive.copy(alpha = 0.5f))
         )
     }
 }
