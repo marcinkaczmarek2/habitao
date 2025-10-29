@@ -20,7 +20,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import app.habitao.R
-import app.habitao.ui.theme.DojoColors
 import app.habitao.ui.theme.AirColor
 import app.habitao.ui.theme.EarthColor
 import app.habitao.ui.theme.FireColor
@@ -30,6 +29,7 @@ import app.habitao.ui.theme.HeaderColor
 import app.habitao.ui.theme.Manrope
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.Color
+import app.habitao.ui.theme.TextCard
 
 
 @Composable
@@ -46,7 +46,7 @@ fun ElementCardDojo(
             .padding(horizontal = 1.dp, vertical = 5.dp),
         shape = MaterialTheme.shapes.medium,
         colors = androidx.compose.material3.CardDefaults.cardColors(
-            containerColor = DojoColors.CardBackground
+            containerColor = PanelBackgroundNonActive
         )
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
@@ -73,7 +73,7 @@ fun ElementCardDojo(
                 text = description,
                 fontFamily = Manrope,
                 style = MaterialTheme.typography.bodyMedium.copy(lineHeight = 15.sp),
-                color = DojoColors.TextCard
+                color = TextCard
             )
         }
     }

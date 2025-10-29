@@ -11,9 +11,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import app.habitao.ui.theme.DojoColors
 import app.habitao.ui.theme.HeaderColor
 import app.habitao.ui.theme.Manrope
+import app.habitao.ui.theme.PanelBackgroundNonActive
+import app.habitao.ui.theme.TextCard
 
 @Composable
 fun MainDojoBox(
@@ -25,7 +26,7 @@ fun MainDojoBox(
             .padding(horizontal = 1.dp),
         shape = MaterialTheme.shapes.medium,
         colors = androidx.compose.material3.CardDefaults.cardColors(
-            containerColor = DojoColors.CardBackground
+            containerColor = PanelBackgroundNonActive
         )
     ) {
         Column(
@@ -45,7 +46,7 @@ fun MainDojoBox(
                 text = "Our philosophy is rooted in the ancient wisdom of the Four Elements, guiding you to cultivate balance and harmony in your daily life." +
                         "By nurturing positive habits and acknowledging areas for growth, you embark on a journey of self-discovery and transformation, creating a life of purpose and well-being",
                 style = MaterialTheme.typography.bodyMedium,
-                color = DojoColors.TextCard,
+                color = TextCard,
                 textAlign = TextAlign.Center,
                 lineHeight = 18.sp,
                 //fontFamily = Manrope

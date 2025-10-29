@@ -24,6 +24,7 @@ import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.YearMonth
 import app.habitao.R
+import app.habitao.ui.theme.Manrope
 import kotlin.math.abs
 
 @SuppressLint("FrequentlyChangingValue")
@@ -49,7 +50,7 @@ fun CalendarView(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(vertical = 10.dp),
+                .padding(horizontal = 5.dp, vertical = 10.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -60,6 +61,7 @@ fun CalendarView(
                 fontSize = 24.sp,
                 fontWeight = FontWeight.SemiBold,
                 color = Color.LightGray,
+                fontFamily = Manrope
             )
             IconButton(onClick = { showDialog = true }) {
                 Icon(

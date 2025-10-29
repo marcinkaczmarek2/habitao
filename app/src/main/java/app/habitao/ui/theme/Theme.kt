@@ -53,19 +53,8 @@ private val LightColorScheme = lightColorScheme(
     outline = Color(0xFF8D8741),
 )
 
-object ElementColors {
-    val Earth = Color(0xFF4B1500)
-    val Air = Color(0xFFA8DADC)
-    val Fire = Color(0xFFD70404)
-    val Water = Color(0xFF0472D7)
-}
 
-object DojoColors {
-    val CardBackground = Color(0xFF1D232D)
-    val HeadlineCard = Color(0xFFF8FAFC)
-    val TextCard = Color(0xFF6B7788)
 
-}
 
 
 @Composable

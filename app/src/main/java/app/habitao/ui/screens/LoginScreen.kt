@@ -14,12 +14,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import app.habitao.ui.components.LowerNavigationMenu
 import app.habitao.ui.components.SettingsTopBar
 import app.habitao.ui.theme.MainBackgroundColor
 import app.habitao.R
 import app.habitao.ui.theme.IconActive
+import app.habitao.ui.theme.IconNonActive
+import app.habitao.ui.theme.IconTextActive
+import app.habitao.ui.theme.IconTextNonActive
 
 @Composable
 fun LoginScreenInitialize(navController: NavController) {
@@ -57,7 +60,7 @@ fun LoginScreenInitialize(navController: NavController) {
             Text(
                 text = "Log in to continue your path.",
                 style = MaterialTheme.typography.bodyMedium,
-                color = Color.Gray,
+                color = IconTextNonActive,
                 modifier = Modifier.align(Alignment.CenterHorizontally)
             )
 
@@ -76,9 +79,10 @@ fun LoginScreenInitialize(navController: NavController) {
                     unfocusedTextColor = Color.White,
                     focusedContainerColor = Color.Transparent,
                     unfocusedContainerColor = Color.Transparent,
-                    focusedIndicatorColor = Color.Green,
-                    unfocusedIndicatorColor = Color.Gray,
-                    cursorColor = Color.Green
+                    focusedIndicatorColor = IconActive,
+                    unfocusedIndicatorColor = IconNonActive,
+                    cursorColor = Color.White,
+                    focusedLabelColor = IconActive,
                 )
             )
 
@@ -98,7 +102,7 @@ fun LoginScreenInitialize(navController: NavController) {
                         painterResource(id = R.drawable.password_hidden_icon)
 
                     IconButton(onClick = { passwordVisible = !passwordVisible }) {
-                        Icon(painter = image, contentDescription = null, tint = Color.Gray)
+                        Icon(painter = image, contentDescription = null, tint = IconNonActive)
                     }
                 },
                 modifier = Modifier
@@ -108,9 +112,10 @@ fun LoginScreenInitialize(navController: NavController) {
                     unfocusedTextColor = Color.White,
                     focusedContainerColor = Color.Transparent,
                     unfocusedContainerColor = Color.Transparent,
-                    focusedIndicatorColor = Color.Green,
-                    unfocusedIndicatorColor = Color.Gray,
-                    cursorColor = Color.Green
+                    focusedIndicatorColor = IconActive,
+                    unfocusedIndicatorColor = IconNonActive,
+                    cursorColor = Color.White,
+                    focusedLabelColor = IconActive,
                 )
             )
 
@@ -127,7 +132,7 @@ fun LoginScreenInitialize(navController: NavController) {
                 shape = RoundedCornerShape(12.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = IconActive)
             ) {
-                Text(text = "Log In", color = Color.Black, fontWeight = FontWeight.Bold)
+                Text(text = "Log In", color = Color.Black, fontWeight = FontWeight.Bold, fontSize = 18.sp)
             }
 
             Spacer(modifier = Modifier.height(20.dp))
@@ -141,12 +146,12 @@ fun LoginScreenInitialize(navController: NavController) {
             ) {
                 Text(
                     text = "Don't have an account?",
-                    color = Color.Gray
+                    color = IconTextNonActive
                 )
                 Spacer(modifier = Modifier.width(4.dp))
                 Text(
                     text = "Register",
-                    color = IconActive,
+                    color = IconTextActive,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.clickable {
                         navController.navigate("register")

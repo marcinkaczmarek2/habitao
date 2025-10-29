@@ -14,12 +14,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import app.habitao.ui.components.LowerNavigationMenu
 import app.habitao.ui.components.SettingsTopBar
 import app.habitao.ui.theme.MainBackgroundColor
 import app.habitao.R
 import app.habitao.ui.theme.IconActive
+import app.habitao.ui.theme.IconNonActive
+import app.habitao.ui.theme.IconTextActive
+import app.habitao.ui.theme.IconTextNonActive
 
 @Composable
 fun RegisterScreenInitialize(navController: NavController) {
@@ -62,7 +66,7 @@ fun RegisterScreenInitialize(navController: NavController) {
             Text(
                 text = "Create your account to start your journey.",
                 style = MaterialTheme.typography.bodyMedium,
-                color = Color.Gray,
+                color = IconTextNonActive,
                 modifier = Modifier.align(Alignment.CenterHorizontally)
             )
 
@@ -80,9 +84,10 @@ fun RegisterScreenInitialize(navController: NavController) {
                     unfocusedTextColor = Color.White,
                     focusedContainerColor = Color.Transparent,
                     unfocusedContainerColor = Color.Transparent,
-                    focusedIndicatorColor = Color.Green,
-                    unfocusedIndicatorColor = Color.Gray,
-                    cursorColor = Color.Green
+                    focusedIndicatorColor = IconActive,
+                    unfocusedIndicatorColor = IconNonActive,
+                    cursorColor = Color.White,
+                    focusedLabelColor = IconActive,
                 )
             )
 
@@ -100,9 +105,10 @@ fun RegisterScreenInitialize(navController: NavController) {
                     unfocusedTextColor = Color.White,
                     focusedContainerColor = Color.Transparent,
                     unfocusedContainerColor = Color.Transparent,
-                    focusedIndicatorColor = Color.Green,
-                    unfocusedIndicatorColor = Color.Gray,
-                    cursorColor = Color.Green
+                    focusedIndicatorColor = IconActive,
+                    unfocusedIndicatorColor = IconNonActive,
+                    cursorColor = Color.White,
+                    focusedLabelColor = IconActive,
                 )
             )
 
@@ -120,9 +126,10 @@ fun RegisterScreenInitialize(navController: NavController) {
                     unfocusedTextColor = Color.White,
                     focusedContainerColor = Color.Transparent,
                     unfocusedContainerColor = Color.Transparent,
-                    focusedIndicatorColor = Color.Green,
-                    unfocusedIndicatorColor = Color.Gray,
-                    cursorColor = Color.Green
+                    focusedIndicatorColor = IconActive,
+                    unfocusedIndicatorColor = IconNonActive,
+                    cursorColor = Color.White,
+                    focusedLabelColor = IconActive,
                 )
             )
 
@@ -142,7 +149,7 @@ fun RegisterScreenInitialize(navController: NavController) {
                         painterResource(id = R.drawable.password_hidden_icon)
 
                     IconButton(onClick = { passwordVisible = !passwordVisible }) {
-                        Icon(painter = image, contentDescription = null, tint = Color.Gray)
+                        Icon(painter = image, contentDescription = null, tint = IconNonActive)
                     }
                 },
                 modifier = Modifier.fillMaxWidth(),
@@ -151,9 +158,10 @@ fun RegisterScreenInitialize(navController: NavController) {
                     unfocusedTextColor = Color.White,
                     focusedContainerColor = Color.Transparent,
                     unfocusedContainerColor = Color.Transparent,
-                    focusedIndicatorColor = Color.Green,
-                    unfocusedIndicatorColor = Color.Gray,
-                    cursorColor = Color.Green
+                    focusedIndicatorColor = IconActive,
+                    unfocusedIndicatorColor = IconNonActive,
+                    cursorColor = Color.White,
+                    focusedLabelColor = IconActive,
                 )
             )
 
@@ -173,7 +181,7 @@ fun RegisterScreenInitialize(navController: NavController) {
                         painterResource(id = R.drawable.password_hidden_icon)
 
                     IconButton(onClick = { confirmPasswordVisible = !confirmPasswordVisible }) {
-                        Icon(painter = image, contentDescription = null, tint = Color.Gray)
+                        Icon(painter = image, contentDescription = null, tint = IconNonActive)
                     }
                 },
                 modifier = Modifier.fillMaxWidth(),
@@ -182,9 +190,10 @@ fun RegisterScreenInitialize(navController: NavController) {
                     unfocusedTextColor = Color.White,
                     focusedContainerColor = Color.Transparent,
                     unfocusedContainerColor = Color.Transparent,
-                    focusedIndicatorColor = Color.Green,
-                    unfocusedIndicatorColor = Color.Gray,
-                    cursorColor = Color.Green
+                    focusedIndicatorColor = IconActive,
+                    unfocusedIndicatorColor = IconNonActive,
+                    cursorColor = Color.White,
+                    focusedLabelColor = IconActive,
                 )
             )
 
@@ -201,7 +210,7 @@ fun RegisterScreenInitialize(navController: NavController) {
                 shape = RoundedCornerShape(12.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = IconActive)
             ) {
-                Text(text = "Register", color = Color.Black, fontWeight = FontWeight.Bold)
+                Text(text = "Register", color = Color.Black, fontWeight = FontWeight.Bold, fontSize = 18.sp)
             }
 
             Spacer(modifier = Modifier.height(20.dp))
@@ -215,12 +224,12 @@ fun RegisterScreenInitialize(navController: NavController) {
             ) {
                 Text(
                     text = "Already have an account?",
-                    color = Color.Gray
+                    color = IconTextNonActive,
                 )
                 Spacer(modifier = Modifier.width(4.dp))
                 Text(
                     text = "Log In",
-                    color = IconActive,
+                    color = IconTextActive,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.clickable {
                         navController.navigate("login")
