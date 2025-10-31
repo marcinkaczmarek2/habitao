@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import app.habitao.R
@@ -18,13 +17,15 @@ import app.habitao.ui.components.StatsElemDescr
 import app.habitao.ui.components.StatsElemGraphBox
 import app.habitao.ui.components.StatsKarmaProgress
 import app.habitao.ui.components.StatsTotalKarma
+import app.habitao.ui.theme.LocalAppColors
 
 @Composable
 fun StatsScreenInitialize(navController: NavController) {
+    val colors = LocalAppColors.current
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFF121212))
+            .background(colors.MainBackgroundColor)
     ) {
 
         Column(

@@ -13,13 +13,17 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import app.habitao.ui.theme.IconActive
+import androidx.compose.runtime.Composable
+import app.habitao.ui.theme.LocalIsDark
+import app.habitao.ui.theme.LocalAppColors
 import app.habitao.ui.theme.Toggle
-import app.habitao.ui.theme.MainBackgroundColor
 
 @Composable
 fun SettingsYinYangToggle() {
-    var isYang by remember { mutableStateOf(false) }
+
+    val isDarkState = LocalIsDark.current
+    val colors = LocalAppColors.current
+    val isYang = !isDarkState.value
     val knobPosition by animateDpAsState(targetValue = if (isYang) 70.dp else 0.dp)
 
     Box(
@@ -27,15 +31,25 @@ fun SettingsYinYangToggle() {
             .width(140.dp)
             .height(40.dp)
             .clip(RoundedCornerShape(20.dp))
-            .background(MainBackgroundColor)
+            .background(colors.MainBackgroundColor)
     ) {
         Row(
             modifier = Modifier.fillMaxSize(),
             horizontalArrangement = Arrangement.SpaceEvenly,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Text("🌙 Yin", fontSize = 14.sp, color = Color.Gray, modifier = Modifier.clickable { isYang = false })
-            Text("☀️ Yang", fontSize = 14.sp, color = Color.Gray, modifier = Modifier.clickable { isYang = true })
+            Text(
+                "🌙 Yin",
+                fontSize = 14.sp,
+                color = Color.Gray,
+                modifier = Modifier.clickable { isDarkState.value = true }
+            )
+            Text(
+                "☀️ Yang",
+                fontSize = 14.sp,
+                color = Color.Gray,
+                modifier = Modifier.clickable { isDarkState.value = false }
+            )
         }
 
         Box(
@@ -44,7 +58,7 @@ fun SettingsYinYangToggle() {
                 .width(70.dp)
                 .height(40.dp)
                 .clip(RoundedCornerShape(20.dp))
-                .background(IconActive.copy(alpha = 0.5f))
+                .background(colors.IconActive.copy(alpha = 0.5f))
         )
     }
 }

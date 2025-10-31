@@ -18,9 +18,9 @@ import androidx.compose.ui.text.font.FontWeight
 import app.habitao.ui.theme.AirColor
 import app.habitao.ui.theme.EarthColor
 import app.habitao.ui.theme.FireColor
+import app.habitao.ui.theme.LocalAppColors
 import app.habitao.ui.theme.WaterColor
 import app.habitao.ui.theme.Manrope
-import app.habitao.ui.theme.IconTextNonActive
 
 @Composable
 fun HabitsListView(
@@ -28,6 +28,8 @@ fun HabitsListView(
     onToggle: (Habit) -> Unit,
     onHabitClick: (Habit) -> Unit
     ) {
+    val colors = LocalAppColors.current
+
     if (habits.isEmpty()) {
         Box(
             modifier = Modifier.fillMaxWidth(),
@@ -35,7 +37,7 @@ fun HabitsListView(
         ) {
             Text(
                 text = "No habits for this day yet",
-                color = IconTextNonActive,
+                color = colors.IconTextNonActive,
                 fontStyle = FontStyle.Italic,
                 fontFamily = Manrope,
                 fontWeight = FontWeight.Normal,

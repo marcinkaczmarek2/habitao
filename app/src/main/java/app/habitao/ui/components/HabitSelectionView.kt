@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.sp
 import app.habitao.ui.theme.AirColor
 import app.habitao.ui.theme.EarthColor
 import app.habitao.ui.theme.FireColor
-import app.habitao.ui.theme.MainBackgroundColor
+import app.habitao.ui.theme.LocalAppColors
 import app.habitao.ui.theme.SecondaryColor
 import app.habitao.ui.theme.WaterColor
 
@@ -30,6 +30,7 @@ fun HabitSelectionView(
     onAddHabitClick: (Habit) -> Unit,
     onClose: () -> Unit
 ) {
+    val colors = LocalAppColors.current
     var searchQuery by remember { mutableStateOf(TextFieldValue("")) }
     val selectedFilters = remember { mutableStateListOf<Element>() }
     var showPopular by remember { mutableStateOf(false) }
@@ -44,7 +45,7 @@ fun HabitSelectionView(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(MainBackgroundColor)
+            .background(colors.MainBackgroundColor)
             .padding(16.dp)
     ) {
         Column(modifier = Modifier.fillMaxSize()) {
@@ -56,7 +57,7 @@ fun HabitSelectionView(
             ) {
                 Text(
                     text = "Select a Habit",
-                    color = Color.White,
+                    color = colors.HeaderColor,
                     fontSize = 22.sp,
                     fontWeight = FontWeight.Bold
                 )
@@ -85,8 +86,8 @@ fun HabitSelectionView(
                     focusedIndicatorColor = Color.LightGray,
                     unfocusedIndicatorColor = Color.Gray,
                     cursorColor = Color.LightGray,
-                    focusedTextColor = Color.White,
-                    unfocusedTextColor = Color.White,
+                    focusedTextColor = colors.HeaderColor,
+                    unfocusedTextColor = colors.HeaderColor,
                     focusedPlaceholderColor = Color.Gray,
                     unfocusedPlaceholderColor = Color.Gray
                 )
@@ -131,6 +132,7 @@ fun HabitSelectionView(
 
 @Composable
 fun FilterChip(label: String, isSelected: Boolean, onClick: () -> Unit) {
+    val colors = LocalAppColors.current
     Surface(
         color = if (isSelected) SecondaryColor else Color.DarkGray,
         shape = MaterialTheme.shapes.medium,
@@ -140,7 +142,7 @@ fun FilterChip(label: String, isSelected: Boolean, onClick: () -> Unit) {
     ) {
         Text(
             text = label,
-            color = Color.White,
+            color = colors.HeaderColor,
             modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp),
             fontSize = 14.sp
         )
@@ -149,6 +151,7 @@ fun FilterChip(label: String, isSelected: Boolean, onClick: () -> Unit) {
 
 @Composable
 fun HabitRow(habit: Habit, onAddClick: () -> Unit) {
+    val colors = LocalAppColors.current
     val elementColor = when (habit.element) {
         Element.FIRE -> FireColor
         Element.WATER -> WaterColor
@@ -168,7 +171,7 @@ fun HabitRow(habit: Habit, onAddClick: () -> Unit) {
         Column {
             Text(
                 text = habit.name,
-                color = Color.White,
+                color = colors.HeaderColor,
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Medium
             )

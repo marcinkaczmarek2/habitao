@@ -8,6 +8,7 @@ import androidx.activity.enableEdgeToEdge
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.annotation.RequiresApi
+import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.graphics.toArgb
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -20,16 +21,22 @@ import app.habitao.ui.screens.RegisterScreenInitialize
 import app.habitao.ui.screens.SettingsAccountScreenInitialize
 import app.habitao.ui.screens.SettingsScreenInitialize
 import app.habitao.ui.theme.HabitaoTheme
-import app.habitao.ui.theme.MainBackgroundColor
+import app.habitao.ui.theme.LocalAppColors
 
 class MainActivity : ComponentActivity() {
+
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        window.decorView.setBackgroundColor(MainBackgroundColor.toArgb()) //MOZE PSUC ZMIANE EKRANOW W LIGHT MODE
+        //window.decorView.setBackgroundColor(MainBackgroundColor.toArgb()) //MOZE PSUC ZMIANE EKRANOW W LIGHT MODE
         setContent {
             HabitaoTheme {
+                val colors = LocalAppColors.current
+
+                SideEffect {
+                    window.decorView.setBackgroundColor(colors.MainBackgroundColor.toArgb())
+                }
                 val navController = rememberNavController()
                 NavHost(navController = navController, startDestination = "habits") {
                     composable("habits") { HabitsScreenInitialize(navController) }

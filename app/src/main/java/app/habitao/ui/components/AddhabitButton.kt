@@ -16,17 +16,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import app.habitao.ui.theme.IconActive
-import app.habitao.ui.theme.Toggle
-import app.habitao.ui.theme.IconTextActive
-import app.habitao.ui.theme.Manrope
+import app.habitao.ui.theme.LocalAppColors
+
 
 @Composable
 fun AddHabitButton(onClick: () -> Unit) {
+    val colors = LocalAppColors.current
     Button(
         onClick = onClick,
         colors = ButtonDefaults.buttonColors(
-            containerColor = IconActive,
+            containerColor = colors.IconActive,
             contentColor = Color.Black),
         modifier = Modifier
             .padding(16.dp)

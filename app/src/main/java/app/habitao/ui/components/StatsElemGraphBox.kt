@@ -17,13 +17,11 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import app.habitao.ui.theme.IconTextNonActive
-import app.habitao.ui.theme.PanelBackgroundNonActive
-import app.habitao.ui.theme.HeaderColor
 import app.habitao.ui.theme.Manrope
 import app.habitao.ui.theme.AirColor
 import app.habitao.ui.theme.EarthColor
 import app.habitao.ui.theme.FireColor
+import app.habitao.ui.theme.LocalAppColors
 import app.habitao.ui.theme.WaterColor
 
 @Composable
@@ -87,20 +85,22 @@ fun StatsElemGraphBox(
     //graph rotation
     val graphInitRot: Float = -90f
 
+    val colors = LocalAppColors.current
+
     //GUI
     Box(
         modifier = Modifier
             .padding(top = 8.dp)
             .fillMaxWidth()
             .height(220.dp)
-            .background(PanelBackgroundNonActive)
+            .background(colors.PanelBackgroundNonActive)
         ,
         contentAlignment = Alignment.TopCenter
     ) {
         Text(
             text = "Element Distribution",
             fontSize = 20.sp,
-            color = HeaderColor,
+            color = colors.HeaderColor,
             fontFamily = Manrope,
             fontWeight = FontWeight.Bold,
             modifier = Modifier
@@ -154,7 +154,7 @@ fun StatsElemGraphBox(
                 text = "Legend:",
                 fontSize = 16.sp,
                 fontFamily = Manrope,
-                color = IconTextNonActive,
+                color = colors.IconTextNonActive,
                 modifier = Modifier
             )
 
@@ -181,7 +181,7 @@ fun StatsElemGraphBox(
                     text = "air ($airPct%)",
                     fontSize = 14.sp,
                     fontFamily = Manrope,
-                    color = IconTextNonActive,
+                    color = colors.IconTextNonActive,
                     modifier = Modifier
                         .padding(start = 2.dp)
                 )
@@ -210,7 +210,7 @@ fun StatsElemGraphBox(
                     text = "fire ($firePct%)",
                     fontSize = 14.sp,
                     fontFamily = Manrope,
-                    color = IconTextNonActive,
+                    color = colors.IconTextNonActive,
                     modifier = Modifier
                         .padding(start = 2.dp)
                 )
@@ -239,7 +239,7 @@ fun StatsElemGraphBox(
                     text = "water ($waterPct%)",
                     fontSize = 14.sp,
                     fontFamily = Manrope,
-                    color = IconTextNonActive,
+                    color = colors.IconTextNonActive,
                     modifier = Modifier
                         .padding(start = 2.dp)
                 )
@@ -268,12 +268,11 @@ fun StatsElemGraphBox(
                     text = "earth ($earthPct%)",
                     fontSize = 14.sp,
                     fontFamily = Manrope,
-                    color = IconTextNonActive,
+                    color = colors.IconTextNonActive,
                     modifier = Modifier
                         .padding(start = 2.dp)
                 )
             }
-
         }
     }
 }

@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.sp
 import java.time.LocalDate
 import app.habitao.ui.theme.DancingScript
 import app.habitao.ui.theme.GreatVibes
+import app.habitao.ui.theme.LocalAppColors
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
@@ -26,6 +27,7 @@ fun ChineseProverbView(
     selectedDate: LocalDate,
     modifier: Modifier = Modifier
 ) {
+    val colors = LocalAppColors.current
     val proverbs = listOf(
         "\"Patience is a bitter plant, but it bears sweet fruit.\"",
         "\"He who asks is a fool for five minutes, but he who does not ask remains a fool forever.\"",
@@ -74,7 +76,7 @@ fun ChineseProverbView(
             text = proverbOfTheDay,
             modifier = Modifier.padding(horizontal = 16.dp),
             style = MaterialTheme.typography.bodyLarge.copy(
-                color = Color.White,
+                color = colors.HeaderColor,
                 fontSize = 25.sp,
                 fontFamily = GreatVibes,
                 fontStyle = FontStyle.Normal,

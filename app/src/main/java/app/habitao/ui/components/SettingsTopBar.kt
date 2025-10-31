@@ -8,13 +8,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import app.habitao.ui.theme.IconTextNonActive
+import app.habitao.ui.theme.LocalAppColors
 
 @Composable
 fun SettingsTopBar(
     title: String,
     navController: NavController
 ) {
+    val colors = LocalAppColors.current
+
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -24,7 +26,7 @@ fun SettingsTopBar(
         Text(
             text = title,
             fontSize = 22.sp,
-            color = IconTextNonActive
+            color = colors.IconTextNonActive
         )
 
         Row(

@@ -20,30 +20,29 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import app.habitao.ui.theme.IconTextNonActive
 import app.habitao.R
-import app.habitao.ui.theme.IconNonActive
-import app.habitao.ui.theme.PanelBackgroundNonActive
+import app.habitao.ui.theme.LocalAppColors
 
 @Composable
 fun SettingsCategoryCard(
     title: String,
     onClick: () -> Unit
 ) {
+    val colors = LocalAppColors.current
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .clickable { onClick() }
-            .background(PanelBackgroundNonActive, shape = MaterialTheme.shapes.medium)
+            .background(colors.PanelBackgroundNonActive, shape = MaterialTheme.shapes.medium)
             .padding(horizontal = 20.dp, vertical = 18.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Text(text = title, fontSize = 16.sp, color = IconTextNonActive)
+        Text(text = title, fontSize = 16.sp, color = colors.IconTextNonActive)
         Image(
             painter = painterResource(id = R.drawable.right_arrow_icon),
             contentDescription = "Arrow to the right",
-            colorFilter = ColorFilter.tint(IconNonActive),
+            colorFilter = ColorFilter.tint(colors.IconNonActive),
             modifier = Modifier.size(32.dp)
         )
     }

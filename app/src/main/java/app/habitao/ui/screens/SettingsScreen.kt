@@ -20,18 +20,19 @@ import app.habitao.ui.components.SettingsLoginButton
 import app.habitao.ui.components.LowerNavigationMenu
 import app.habitao.ui.components.SettingsCategoryCard
 import app.habitao.ui.components.createSettingsClickActions
-import app.habitao.ui.theme.IconTextNonActive
-import app.habitao.ui.theme.MainBackgroundColor
+import app.habitao.ui.theme.LocalAppColors
+
 
 @Composable
 fun SettingsScreenInitialize(navController: NavController) {
 
+    val colors = LocalAppColors.current
     val actions = createSettingsClickActions(navController)
 
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(MainBackgroundColor)
+            .background(colors.MainBackgroundColor)
     ) {
         Column(
             modifier = Modifier
@@ -42,7 +43,7 @@ fun SettingsScreenInitialize(navController: NavController) {
             Text(
                 text = "Settings",
                 fontSize = 22.sp,
-                color = IconTextNonActive
+                color = colors.IconTextNonActive
             )
 
             Spacer(modifier = Modifier.height(20.dp))

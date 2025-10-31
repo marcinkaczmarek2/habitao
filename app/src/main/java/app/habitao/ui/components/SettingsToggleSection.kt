@@ -13,8 +13,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import app.habitao.ui.theme.IconTextNonActive
-import app.habitao.ui.theme.PanelBackgroundNonActive
+import app.habitao.ui.theme.LocalAppColors
 import app.habitao.ui.theme.Toggle
 
 @Composable
@@ -24,10 +23,12 @@ fun SettingsToggleSection(
     toggles: List<Boolean>,
     onToggleChange: (Int, Boolean) -> Unit
 ) {
+    val colors = LocalAppColors.current
+
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .background(PanelBackgroundNonActive, shape = MaterialTheme.shapes.medium)
+            .background(colors.PanelBackgroundNonActive, shape = MaterialTheme.shapes.medium)
             .padding(horizontal = 20.dp, vertical = 18.dp)
     ) {
 
@@ -35,7 +36,7 @@ fun SettingsToggleSection(
             text = title,
             fontSize = 16.sp,
             fontWeight = FontWeight.SemiBold,
-            color = IconTextNonActive
+            color = colors.IconTextNonActive
         )
 
         Spacer(modifier = Modifier.height(14.dp))
@@ -51,14 +52,14 @@ fun SettingsToggleSection(
                 Text(
                     text = label,
                     fontSize = 16.sp,
-                    color = IconTextNonActive
+                    color = colors.IconTextNonActive
                 )
 
                 Switch(
                     checked = toggles[index],
                     onCheckedChange = { onToggleChange(index, it) },
                     colors = androidx.compose.material3.SwitchDefaults.colors(
-                        checkedIconColor = Color.White,
+                        checkedIconColor = colors.HeaderColor,
                         checkedTrackColor = Toggle,
                         uncheckedThumbColor = Color.Gray,
                         uncheckedTrackColor = Color.LightGray

@@ -13,16 +13,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import app.habitao.ui.theme.IconActive
-import app.habitao.ui.theme.IconTextActive
-import app.habitao.ui.theme.PanelBackgroundNonActive
+import app.habitao.ui.theme.LocalAppColors
 
 @Composable
 fun SettingsLoginButton(navController: NavController) {
+    val colors = LocalAppColors.current
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .background(PanelBackgroundNonActive, shape = MaterialTheme.shapes.medium)
+            .background(colors.PanelBackgroundNonActive, shape = MaterialTheme.shapes.medium)
             .clickable {
                 navController.navigate("login")
             }
@@ -32,7 +31,7 @@ fun SettingsLoginButton(navController: NavController) {
         Text(
             text = "Log In",
             fontSize = 18.sp,
-            color = IconTextActive,
+            color = colors.IconTextActive,
             fontWeight = FontWeight.Bold
         )
     }

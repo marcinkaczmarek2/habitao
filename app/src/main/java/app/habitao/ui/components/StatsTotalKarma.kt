@@ -12,25 +12,26 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import app.habitao.ui.theme.IconTextActive
-import app.habitao.ui.theme.PanelBackgroundNonActive
-import app.habitao.ui.theme.HeaderColor
+import app.habitao.ui.theme.LocalAppColors
 import app.habitao.ui.theme.Manrope
 
 @Composable
 fun StatsTotalKarma(totalKarma: Int) {
+
+    val colors = LocalAppColors.current
+
     Box(
         modifier = Modifier
             .fillMaxWidth()
             .height(128.dp)
-            .background(PanelBackgroundNonActive)
+            .background(colors.PanelBackgroundNonActive)
         ,
         contentAlignment = Alignment.TopCenter
     ) {
         Text(
             text = "Your Total Karma",
             fontSize = 32.sp,
-            color = HeaderColor,
+            color = colors.HeaderColor,
             fontFamily = Manrope,
             fontWeight = FontWeight.Bold,
             modifier = Modifier
@@ -42,7 +43,7 @@ fun StatsTotalKarma(totalKarma: Int) {
             text = totalKarma.toString(),
             fontSize = 40.sp,
             fontFamily = Manrope,
-            color = IconTextActive,
+            color = colors.IconTextActive,
             modifier = Modifier
                 .align(Alignment.TopStart)
                 .padding(start = 28.dp, top = 58.dp)
@@ -52,7 +53,7 @@ fun StatsTotalKarma(totalKarma: Int) {
             text = "points",
             fontSize = 28.sp,
             fontFamily = Manrope,
-            color = IconTextActive,
+            color = colors.IconTextActive,
             modifier = Modifier
                 .align(Alignment.TopEnd)
                 .padding(end = 28.dp, top = 66.dp)

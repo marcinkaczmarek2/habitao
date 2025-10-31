@@ -22,17 +22,18 @@ import app.habitao.ui.components.CalendarView
 import app.habitao.ui.components.LowerNavigationMenu
 import app.habitao.ui.components.*
 import app.habitao.ui.components.HabitsViewModel
-import app.habitao.ui.theme.MainBackgroundColor
 import com.example.habits.ui.components.ChineseProverbView
 import java.time.LocalDate
 import android.app.Application
 import androidx.lifecycle.ViewModelProvider
 import androidx.compose.ui.platform.LocalContext
+import app.habitao.ui.theme.LocalAppColors
 
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun HabitsScreenInitialize(navController: NavController) {
+    val colors = LocalAppColors.current
     val context = LocalContext.current
     val viewModel: HabitsViewModel = viewModel(
         factory = ViewModelProvider.AndroidViewModelFactory(context.applicationContext as Application)
@@ -52,7 +53,7 @@ fun HabitsScreenInitialize(navController: NavController) {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(MainBackgroundColor)
+            .background(colors.MainBackgroundColor)
     ) {
         Column(
             modifier = Modifier

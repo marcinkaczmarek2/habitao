@@ -10,22 +10,23 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import app.habitao.ui.theme.IconTextNonActive
-import app.habitao.ui.theme.PanelBackgroundNonActive
+import app.habitao.ui.theme.LocalAppColors
 
 @Composable
 fun SettingsAppearanceSection() {
+    val colors = LocalAppColors.current
+
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .background(PanelBackgroundNonActive, shape = MaterialTheme.shapes.medium)
+            .background(colors.PanelBackgroundNonActive, shape = MaterialTheme.shapes.medium)
             .padding(20.dp)
     ) {
         Text(
             text = "Appearance",
             fontSize = 18.sp,
             fontWeight = FontWeight.Bold,
-            color = IconTextNonActive
+            color = colors.IconTextNonActive
         )
 
         Spacer(modifier = Modifier.height(12.dp))
@@ -35,7 +36,7 @@ fun SettingsAppearanceSection() {
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Text("Mode", color = IconTextNonActive, fontSize = 16.sp)
+            Text("Mode", color = colors.IconTextNonActive, fontSize = 16.sp)
             SettingsYinYangToggle()
         }
     }

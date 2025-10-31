@@ -30,18 +30,18 @@ import app.habitao.ui.components.SettingsCategoryCard
 import app.habitao.ui.components.SettingsLoginButton
 import app.habitao.ui.components.SettingsToggleSection
 import app.habitao.ui.components.SettingsTopBar
-import app.habitao.ui.theme.IconTextNonActive
-import app.habitao.ui.theme.MainBackgroundColor
+import app.habitao.ui.theme.LocalAppColors
 import kotlin.math.abs
 
 @Composable
 fun SettingsPrivacyScreenInitialize(navController: NavController) {
+    val colors = LocalAppColors.current
     var shareUserData by remember { mutableStateOf(false) }
 
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(MainBackgroundColor)
+            .background(colors.MainBackgroundColor)
     ) {
         Column(
             modifier = Modifier

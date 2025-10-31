@@ -13,17 +13,18 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import app.habitao.ui.components.*
 import app.habitao.ui.components.LowerNavigationMenu
-import app.habitao.ui.theme.IconTextNonActive
 import app.habitao.ui.components.MainDojoBox
-import app.habitao.ui.theme.MainBackgroundColor
-import app.habitao.ui.theme.PanelBackgroundNonActive
+import app.habitao.ui.theme.LocalAppColors
 
 @Composable
 fun DojoScreenInitialize(navController: NavController) {
+
+    val colors = LocalAppColors.current
+
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(MainBackgroundColor)
+            .background(colors.MainBackgroundColor)
     ) {
 
         Column(
@@ -35,7 +36,7 @@ fun DojoScreenInitialize(navController: NavController) {
             Text(
                 text = "Dojo",
                 fontSize = 22.sp,
-                color = IconTextNonActive
+                color = colors.IconTextNonActive
             )
             Spacer(modifier = Modifier.height(20.dp))
 
@@ -45,7 +46,7 @@ fun DojoScreenInitialize(navController: NavController) {
 
             Text(
                 text = "The Four Elements",
-                color = IconTextNonActive,
+                color = colors.IconTextNonActive,
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier.fillMaxWidth(),

@@ -19,15 +19,16 @@ import androidx.navigation.NavController
 import app.habitao.ui.components.LowerNavigationMenu
 import app.habitao.ui.components.SettingsLoginButton
 import app.habitao.ui.components.SettingsTopBar
-import app.habitao.ui.theme.IconTextNonActive
-import app.habitao.ui.theme.MainBackgroundColor
+import app.habitao.ui.theme.LocalAppColors
+
 
 @Composable
 fun SettingsAccountScreenInitialize(navController: NavController) {
+    val colors = LocalAppColors.current
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(MainBackgroundColor)
+            .background(colors.MainBackgroundColor)
     ) {
         Column(
             modifier = Modifier

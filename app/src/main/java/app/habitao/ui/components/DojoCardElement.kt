@@ -24,11 +24,10 @@ import app.habitao.ui.theme.AirColor
 import app.habitao.ui.theme.EarthColor
 import app.habitao.ui.theme.FireColor
 import app.habitao.ui.theme.WaterColor
-import app.habitao.ui.theme.PanelBackgroundNonActive
-import app.habitao.ui.theme.HeaderColor
 import app.habitao.ui.theme.Manrope
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.Color
+import app.habitao.ui.theme.LocalAppColors
 import app.habitao.ui.theme.TextCard
 
 
@@ -40,13 +39,15 @@ fun ElementCardDojo(
     iconColor: Color,
     modifier: Modifier = Modifier
 ) {
+    val colors = LocalAppColors.current
+
     Card(
         modifier = modifier
             .fillMaxWidth()
             .padding(horizontal = 1.dp, vertical = 5.dp),
         shape = MaterialTheme.shapes.medium,
         colors = androidx.compose.material3.CardDefaults.cardColors(
-            containerColor = PanelBackgroundNonActive
+            containerColor = colors.PanelBackgroundNonActive
         )
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
@@ -63,7 +64,7 @@ fun ElementCardDojo(
                     fontFamily = Manrope,
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold,
-                    color = HeaderColor
+                    color = colors.HeaderColor
                 )
             }
 

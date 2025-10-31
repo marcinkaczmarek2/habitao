@@ -11,22 +11,22 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import app.habitao.ui.theme.HeaderColor
+import app.habitao.ui.theme.LocalAppColors
 import app.habitao.ui.theme.Manrope
-import app.habitao.ui.theme.PanelBackgroundNonActive
 import app.habitao.ui.theme.TextCard
 
 @Composable
 fun MainDojoBox(
     modifier: Modifier = Modifier
 ) {
+    val colors = LocalAppColors.current
     Card(
         modifier = modifier
             .fillMaxWidth()
             .padding(horizontal = 1.dp),
         shape = MaterialTheme.shapes.medium,
         colors = androidx.compose.material3.CardDefaults.cardColors(
-            containerColor = PanelBackgroundNonActive
+            containerColor = colors.PanelBackgroundNonActive
         )
     ) {
         Column(
@@ -38,7 +38,7 @@ fun MainDojoBox(
                 text = "The Way of Balance",
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Bold,
-                color = HeaderColor,
+                color = colors.HeaderColor,
                 fontFamily = Manrope
             )
             Spacer(modifier = Modifier.height(6.dp))

@@ -21,11 +21,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import app.habitao.R
-import app.habitao.ui.theme.IconActive
-import app.habitao.ui.theme.IconNonActive
-import app.habitao.ui.theme.IconTextActive
-import app.habitao.ui.theme.IconTextNonActive
-import app.habitao.ui.theme.PanelBackgroundNonActive
 import app.habitao.ui.theme.Manrope
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
@@ -33,10 +28,12 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ripple
 import androidx.compose.runtime.remember
 import androidx.compose.ui.draw.clip
+import app.habitao.ui.theme.LocalAppColors
 
 @Composable
 fun LowerNavigationMenu(navController: NavController) {
 
+    val colors = LocalAppColors.current
     val actions = createIconClickActions(navController)
     val onHabitsClick = actions.onHabitsClick
     val onStatsClick = actions.onStatsClick
@@ -47,7 +44,7 @@ fun LowerNavigationMenu(navController: NavController) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .background(PanelBackgroundNonActive)
+            .background(colors.PanelBackgroundNonActive)
             .padding(vertical = 12.dp),
         horizontalArrangement = Arrangement.SpaceEvenly,
         verticalAlignment = Alignment.CenterVertically
@@ -91,8 +88,9 @@ fun IconButtonWithImage(
     onClick: () -> Unit,
     isSelected: Boolean = false
 ) {
-    val iconColor = if (isSelected) IconActive else IconNonActive
-    val textColor = if (isSelected) IconTextActive else IconTextNonActive
+    val colors = LocalAppColors.current
+    val iconColor = if (isSelected) colors.IconActive else colors.IconNonActive
+    val textColor = if (isSelected) colors.IconTextActive else colors.IconTextNonActive
     Box(
         modifier = Modifier
             .size(width = 88.dp, height = 72.dp)
@@ -101,7 +99,7 @@ fun IconButtonWithImage(
                 interactionSource = remember { MutableInteractionSource() },
                 indication = ripple(
                     bounded = true,
-                    color = IconTextActive
+                    color = colors.IconTextActive
                 ),
                 onClick = onClick
             ),

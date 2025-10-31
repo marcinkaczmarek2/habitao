@@ -12,17 +12,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import app.habitao.ui.theme.IconTextActive
-import app.habitao.ui.theme.IconTextNonActive
-import app.habitao.ui.theme.PanelBackgroundNonActive
-import app.habitao.ui.theme.HeaderColor
+import app.habitao.ui.theme.LocalAppColors
 import app.habitao.ui.theme.Manrope
 
 @Composable
 fun StatsKarmaProgress(karmaProgress: Int, karmaToNextLv: Int) {
+
+    val colors = LocalAppColors.current
     //input control
     if (karmaToNextLv < 1) {
-        throw IllegalArgumentException("Karma to next level must be positive");
+        throw IllegalArgumentException("Karma to next level must be positive")
     }
 
     if (karmaProgress < 0) {
@@ -39,7 +38,7 @@ fun StatsKarmaProgress(karmaProgress: Int, karmaToNextLv: Int) {
             .padding(top = 8.dp)
             .fillMaxWidth()
             .height(100.dp)
-            .background(PanelBackgroundNonActive)
+            .background(colors.PanelBackgroundNonActive)
 
         ,
         contentAlignment = Alignment.Center
@@ -48,7 +47,7 @@ fun StatsKarmaProgress(karmaProgress: Int, karmaToNextLv: Int) {
             text = "Next Habit Progress",
             fontSize = 20.sp,
             fontFamily = Manrope,
-            color = HeaderColor,
+            color = colors.HeaderColor,
             modifier = Modifier
                 .align(Alignment.TopStart)
                 .padding(start = 20.dp, top = 12.dp)
@@ -56,8 +55,8 @@ fun StatsKarmaProgress(karmaProgress: Int, karmaToNextLv: Int) {
 
         LinearProgressIndicator(
             progress = { karmaProgress.toFloat() / karmaToNextLv.toFloat() },
-            trackColor = IconTextNonActive,
-            color = IconTextActive,
+            trackColor = colors.IconTextNonActive,
+            color = colors.IconTextActive,
             modifier = Modifier
                 .align(Alignment.TopCenter)
                 .padding(start = 20.dp, end = 20.dp, top = 50.dp)
@@ -68,7 +67,7 @@ fun StatsKarmaProgress(karmaProgress: Int, karmaToNextLv: Int) {
             text = "$karmaProgress / $karmaToNextLv points",
             fontSize = 18.sp,
             fontFamily = Manrope,
-            color = IconTextActive,
+            color = colors.IconTextActive,
             modifier = Modifier
                 .align(Alignment.TopEnd)
                 .padding(end = 20.dp, top = 62.dp)

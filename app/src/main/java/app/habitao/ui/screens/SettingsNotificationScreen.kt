@@ -27,20 +27,20 @@ import app.habitao.R
 import app.habitao.ui.components.SettingsBackButton
 import app.habitao.ui.components.SettingsToggleSection
 import app.habitao.ui.components.SettingsTopBar
-import app.habitao.ui.theme.IconTextNonActive
-import app.habitao.ui.theme.MainBackgroundColor
-import kotlin.math.abs
+import app.habitao.ui.theme.LocalAppColors
+
 
 @Composable
 fun SettingsNotificationScreenInitialize(navController: NavController) {
 
+    val colors = LocalAppColors.current
     var generalToggles by remember { mutableStateOf(listOf(true, false)) }
     var karmaToggles by remember { mutableStateOf(listOf(false, true, false)) }
 
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(MainBackgroundColor)
+            .background(colors.MainBackgroundColor)
             .padding(horizontal = 16.dp, vertical = 24.dp)
     ) {
 
