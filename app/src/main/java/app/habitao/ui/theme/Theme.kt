@@ -7,21 +7,15 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import app.habitao.R
-import android.os.Build
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.darkColorScheme
-import androidx.compose.material3.dynamicDarkColorScheme
-import androidx.compose.material3.dynamicLightColorScheme
-import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.rememberUpdatedState
 
 data class AppColors(
     val MainBackgroundColor: Color,
@@ -54,10 +48,7 @@ private val LightColorScheme = AppColors(
     IconTextActive = Color(0xFFB98E00)
 )
 
-// CompositionLocal, który przechowuje aktualny zestaw kolorów
 val LocalAppColors = staticCompositionLocalOf { DarkColorScheme }
-
-// CompositionLocal, który przechowuje informację o trybie
 val LocalIsDark = staticCompositionLocalOf { mutableStateOf(true) }
 
 @Composable
@@ -65,15 +56,21 @@ fun HabitaoTheme(
     darkTheme: Boolean = true,
     content: @Composable () -> Unit
 ) {
-    val isDarkState = remember { mutableStateOf(darkTheme) }
-    val colors = if (isDarkState.value) DarkColorScheme else LightColorScheme
+    val isDarkState = rememberUpdatedState(darkTheme)
+    val darkModeState = remember { mutableStateOf(isDarkState.value) }
+
+    LaunchedEffect(isDarkState.value) {
+        darkModeState.value = isDarkState.value
+    }
+
+    val colors = if (darkModeState.value) DarkColorScheme else LightColorScheme
 
     CompositionLocalProvider(
         LocalAppColors provides colors,
-        LocalIsDark provides isDarkState
+        LocalIsDark provides darkModeState
     ) {
         MaterialTheme(
-            typography = Typography,
+            typography = AppTypography,
             content = content
         )
     }

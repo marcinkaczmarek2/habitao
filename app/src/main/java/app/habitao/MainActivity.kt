@@ -22,6 +22,8 @@ import app.habitao.ui.screens.SettingsAccountScreenInitialize
 import app.habitao.ui.screens.SettingsScreenInitialize
 import app.habitao.ui.theme.HabitaoTheme
 import app.habitao.ui.theme.LocalAppColors
+import androidx.compose.runtime.collectAsState
+import app.habitao.ui.components.ThemeDataStore
 
 class MainActivity : ComponentActivity() {
 
@@ -31,7 +33,11 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         //window.decorView.setBackgroundColor(MainBackgroundColor.toArgb()) //MOZE PSUC ZMIANE EKRANOW W LIGHT MODE
         setContent {
-            HabitaoTheme {
+
+            val isDarkFlow = ThemeDataStore.getTheme(applicationContext)
+            val isDark = isDarkFlow.collectAsState(initial = true).value
+
+            HabitaoTheme(darkTheme = isDark) {
                 val colors = LocalAppColors.current
 
                 SideEffect {

@@ -17,6 +17,9 @@ import androidx.compose.runtime.Composable
 import app.habitao.ui.theme.LocalIsDark
 import app.habitao.ui.theme.LocalAppColors
 import app.habitao.ui.theme.Toggle
+import androidx.compose.ui.platform.LocalContext
+import kotlinx.coroutines.launch
+
 
 @Composable
 fun SettingsYinYangToggle() {
@@ -24,7 +27,9 @@ fun SettingsYinYangToggle() {
     val isDarkState = LocalIsDark.current
     val colors = LocalAppColors.current
     val isYang = !isDarkState.value
+    val context = LocalContext.current
     val knobPosition by animateDpAsState(targetValue = if (isYang) 70.dp else 0.dp)
+    val scope = rememberCoroutineScope()
 
     Box(
         modifier = Modifier
@@ -42,16 +47,25 @@ fun SettingsYinYangToggle() {
                 "🌙 Yin",
                 fontSize = 14.sp,
                 color = Color.Gray,
-                modifier = Modifier.clickable { isDarkState.value = true }
+                modifier = Modifier.clickable {
+                    isDarkState.value = true
+                    scope.launch {
+                        ThemeDataStore.saveTheme(context, true)
+                    }
+                }
             )
             Text(
                 "☀️ Yang",
                 fontSize = 14.sp,
                 color = Color.Gray,
-                modifier = Modifier.clickable { isDarkState.value = false }
+                modifier = Modifier.clickable {
+                    isDarkState.value = false
+                    scope.launch {
+                        ThemeDataStore.saveTheme(context, false)
+                    }
+                }
             )
         }
-
         Box(
             modifier = Modifier
                 .offset(x = knobPosition)
