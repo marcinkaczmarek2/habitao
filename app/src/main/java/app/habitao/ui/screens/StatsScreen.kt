@@ -43,11 +43,17 @@ fun StatsScreenInitialize(navController: NavController) {
             //NOTE: I thought we may use a couple versions of images for that (idk - you can rm that)
             StatsBonsai(R.drawable.bonsai)
 
+            //tmp elements
+            var airPts = 10
+            var firePts = 34
+            var waterPts = 37
+            var earthPts = 33
+
             //elements description
-            StatsElemDescr()
+            StatsElemDescr(airPts, firePts, waterPts, earthPts)
 
             //graph box
-            StatsElemGraphBox(111, 172, 37, 41)
+            StatsElemGraphBox(airPts, firePts, waterPts, earthPts)
         }
 
         //bottom menu
