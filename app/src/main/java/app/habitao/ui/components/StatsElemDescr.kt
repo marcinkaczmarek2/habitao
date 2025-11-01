@@ -46,12 +46,8 @@ fun StatsElemDescr(
     val waterShare: Float = waterPts.toFloat() / totalPts
     val earthShare: Float = earthPts.toFloat() / totalPts
 
-    //checking whether all elements are present
-    var allElemsPresent: Boolean = true
-
-    if (airPts == 0 || firePts == 0 || waterPts == 0 || earthPts == 0) {
-        allElemsPresent = false
-    }
+    //checking number of elements that are present
+    val presElemCount: Int = listOf(airPts, firePts, waterPts, earthPts).count({it > 0})
 
     //find 1st, 2nd, 3rd max value
     val shares = listOf(airShare, fireShare, waterShare, earthShare).sortedDescending()
@@ -60,11 +56,15 @@ fun StatsElemDescr(
     val thresh = 0.1f
     val numOfMaxElems: Int = shares.count( {it + thresh >= shares[0]} )
 
-    //case 1: all elements are present and even
+    //case 1: all elements are present and +/- even
     if (numOfMaxElems == 4) {
         descr += "All your elements are more or less even. \nYou live a balanced life. Carry on a great job!"
     }
-    //case 2: 2 or 3 elements are clearly dominating over others
+    //case 2: all elements that are available are +/- even
+    else if (numOfMaxElems == presElemCount && presElemCount != 1) {
+        descr += "All your elements are more or less even.\n"
+    }
+    //case 3: 2 or 3 elements are clearly dominating over others
     else if (numOfMaxElems in 2..3) {
         descr += "Dominating elements: "
 
@@ -87,8 +87,8 @@ fun StatsElemDescr(
         descr = descr.substring(0, descr.length - 2) + ".\n"
 
     }
-    //case 3: there is 1 dominating element
-    else{
+    //case 4: there is 1 dominating element
+    else if (presElemCount != 1) {
         when {
             shares[0] == airShare -> descr += "Air is a dominating element.\n"
             shares[0] == fireShare -> descr += "Fire is a dominating element.\n"
@@ -96,9 +96,18 @@ fun StatsElemDescr(
             shares[0] == earthShare -> descr += "Earth is a dominating element.\n"
         }
     }
+    //case 5: there is a single element
+    else {
+        when {
+            shares[0] == airShare -> descr += "Air is the only element.\n"
+            shares[0] == fireShare -> descr += "Fire is the only element.\n"
+            shares[0] == waterShare -> descr += "Water is the only element.\n"
+            shares[0] == earthShare -> descr += "Earth is the only element.\n"
+        }
+    }
 
     //additional info
-    if (!allElemsPresent) {
+    if (presElemCount < 4) {
         descr += "You don't develop habits from each category. Consider introducing more variety. "
     }
     else if (numOfMaxElems in 1..3) {

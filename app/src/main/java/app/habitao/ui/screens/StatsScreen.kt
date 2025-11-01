@@ -44,10 +44,10 @@ fun StatsScreenInitialize(navController: NavController) {
             StatsBonsai(R.drawable.bonsai)
 
             //tmp elements
-            var airPts = 10
-            var firePts = 34
-            var waterPts = 37
-            var earthPts = 33
+            var airPts = 103
+            var firePts = 110
+            var waterPts = 105
+            var earthPts = 100
 
             //elements description
             StatsElemDescr(airPts, firePts, waterPts, earthPts)
