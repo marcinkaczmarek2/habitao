@@ -78,21 +78,13 @@ fun HabitsScreenInitialize(navController: NavController) {
                 onHabitClick = { habit ->
                     selectedHabit = habit
                     showDetailsDialog = true
+                },
+                onDelete = {
+                    viewModel.deleteHabit(it)
                 }
             )
 
         }
-
-//        Box(
-//            modifier = Modifier
-//                .fillMaxSize()
-//                .padding(bottom = 90.dp),
-//            contentAlignment = Alignment.BottomCenter
-//        ) {
-//            AddHabitButton {
-//                showSelection = true
-//            }
-//        }
 
         Box(
             modifier = Modifier

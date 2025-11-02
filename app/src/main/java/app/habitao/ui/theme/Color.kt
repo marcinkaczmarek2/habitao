@@ -11,15 +11,19 @@ val Toggle = Color(0xFFCE9900)
 //val LowerMenuBackgroundActive = Color(0xff483f2b)
 
 //val MainBackgroundColor = Color(0xFF121212)
-val SecondaryColor = Color(0xFF343434)
 
 val TextCard = Color(0xFF6B7788)
+val TextOnColor = Color(0xFFE0E0E0)
 
 //elements
-val AirColor = Color(0xFFa8dadc)
-val FireColor = Color(0xFFd70404)
-val WaterColor = Color(0xFF0472D7)
-val EarthColor = Color(0xFF009103)
+//val AirColor = Color(0xFFa8dadc)
+//val FireColor = Color(0xFFd70404)
+//val WaterColor = Color(0xFF0472D7)
+//val EarthColor = Color(0xFF009103)
+val AirColor = Color(0xFFD79248)
+val FireColor = Color(0xFFD55959)
+val WaterColor = Color(0xFF4893DC)
+val EarthColor = Color(0xFF5AB95A)
 
 //stats screen
 //val HeaderColor = Color.White

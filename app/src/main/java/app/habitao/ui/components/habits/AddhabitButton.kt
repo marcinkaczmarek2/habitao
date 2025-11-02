@@ -2,9 +2,8 @@ package app.habitao.ui.components.habits
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -29,18 +28,18 @@ fun AddHabitButton(onClick: () -> Unit) {
             containerColor = colors.IconActive,
             contentColor = Color.Black),
         modifier = Modifier
-            //.padding(16.dp)
             .size(70.dp)
             .graphicsLayer(rotationZ = 45f)
             .clip(MaterialTheme.shapes.medium)
-            .background(colors.IconActive)
+            .background(colors.IconActive),
+        contentPadding = PaddingValues(8.dp)
     ) {
         Image(
             painter = painterResource(id = R.drawable.add_icon),
             contentDescription = "Add Habit",
-            colorFilter = ColorFilter.tint(color = colors.IconNonActive),
+            colorFilter = ColorFilter.tint(color = Color(0xFF4B5563)),
             modifier = Modifier
-                .size(30.dp)
+                .fillMaxSize()
                 .graphicsLayer(rotationZ = -45f)
         )
     }

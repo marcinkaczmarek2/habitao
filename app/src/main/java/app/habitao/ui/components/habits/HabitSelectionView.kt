@@ -2,25 +2,30 @@ package app.habitao.ui.components.habits
 
 import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import app.habitao.R
 import app.habitao.ui.theme.AirColor
 import app.habitao.ui.theme.EarthColor
 import app.habitao.ui.theme.FireColor
 import app.habitao.ui.theme.LocalAppColors
-import app.habitao.ui.theme.SecondaryColor
+import app.habitao.ui.theme.TextOnColor
 import app.habitao.ui.theme.WaterColor
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -47,6 +52,7 @@ fun HabitSelectionView(
             .fillMaxSize()
             .background(colors.MainBackgroundColor)
             .padding(16.dp)
+            .padding(top = 40.dp)
     ) {
         Column(modifier = Modifier.fillMaxSize()) {
 
@@ -63,10 +69,11 @@ fun HabitSelectionView(
                 )
                 Text(
                     text = "✕",
-                    color = Color.LightGray,
-                    fontSize = 20.sp,
+                    color = colors.IconNonActive,
+                    fontSize = 26.sp,
                     modifier = Modifier
                         .clickable { onClose() }
+                        .padding(end = 5.dp)
                 )
             }
 
@@ -117,7 +124,7 @@ fun HabitSelectionView(
                 )
             }
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(12.dp))
 
             LazyColumn(
                 modifier = Modifier.fillMaxSize()
@@ -133,8 +140,17 @@ fun HabitSelectionView(
 @Composable
 fun FilterChip(label: String, isSelected: Boolean, onClick: () -> Unit) {
     val colors = LocalAppColors.current
+
+    val elementColor = when (label) {
+        "Fire" -> FireColor
+        "Water" -> WaterColor
+        "Earth" -> EarthColor
+        "Air" -> AirColor
+        else -> colors.IconActive
+    }
+
     Surface(
-        color = if (isSelected) SecondaryColor else Color.DarkGray,
+        color = if (isSelected) elementColor else colors.IconTextNonActive,
         shape = MaterialTheme.shapes.medium,
         modifier = Modifier
             .clickable { onClick() }
@@ -151,7 +167,7 @@ fun FilterChip(label: String, isSelected: Boolean, onClick: () -> Unit) {
 
 @Composable
 fun HabitRow(habit: Habit, onAddClick: () -> Unit) {
-    val colors = LocalAppColors.current
+
     val elementColor = when (habit.element) {
         Element.FIRE -> FireColor
         Element.WATER -> WaterColor
@@ -159,11 +175,18 @@ fun HabitRow(habit: Habit, onAddClick: () -> Unit) {
         Element.AIR -> AirColor
     }
 
+    val elementIcon = when (habit.element) {
+        Element.FIRE -> R.drawable.fire_icon2
+        Element.WATER -> R.drawable.water_icon
+        Element.EARTH -> R.drawable.earth_icon
+        Element.AIR -> R.drawable.air_icon
+    }
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 8.dp)
-            .background(elementColor.copy(alpha = 0.5f))
+            .padding(vertical = 5.dp)
+            .background(elementColor)
             .padding(horizontal = 12.dp, vertical = 10.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
@@ -171,21 +194,39 @@ fun HabitRow(habit: Habit, onAddClick: () -> Unit) {
         Column {
             Text(
                 text = habit.name,
-                color = colors.HeaderColor,
-                fontSize = 18.sp,
+                color = TextOnColor,
+                fontSize = 22.sp,
                 fontWeight = FontWeight.Medium
             )
             Text(
                 text = habit.element.name.lowercase().replaceFirstChar { it.uppercase() },
-                color = Color.LightGray,
-                fontSize = 13.sp
+                color = TextOnColor,
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Medium
             )
         }
-        Text(
-            text = "+",
-            color = SecondaryColor,
-            fontSize = 26.sp,
-            modifier = Modifier.clickable { onAddClick() }
-        )
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(30.dp)
+        ) {
+            Image(
+                painter = painterResource(id = elementIcon),
+                contentDescription = "Element Icon",
+                colorFilter = ColorFilter.tint(TextOnColor),
+                modifier = Modifier.size(32.dp)
+            )
+            Text(
+                text = "+",
+                color = TextOnColor,
+                fontSize = 30.sp,
+                modifier = Modifier
+                    .clickable { onAddClick() }
+                    .background(
+                        color = Color.Black.copy(alpha = 0.3f),
+                        shape = CircleShape
+                    )
+                    .padding(12.dp)
+            )
+        }
     }
 }
