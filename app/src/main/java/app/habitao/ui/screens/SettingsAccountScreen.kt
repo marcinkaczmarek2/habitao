@@ -43,12 +43,5 @@ fun SettingsAccountScreenInitialize(navController: NavController) {
             SettingsLoginButton(navController)
         }
 
-        Box(
-            modifier = Modifier
-                .fillMaxSize(),
-            contentAlignment = Alignment.BottomCenter
-        ) {
-            LowerNavigationMenu(navController)
-        }
     }
 }

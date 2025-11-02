@@ -101,9 +101,33 @@ val AppTypography = Typography(
 )
 
 val DancingScript = FontFamily(
-    Font(R.font.dancingscript_regular, FontWeight.Normal )
+    Font(R.font.dancing_script_regular, FontWeight.Normal )
 )
 
 val GreatVibes = FontFamily(
     Font(R.font.great_vibes_regular, FontWeight.Normal )
+)
+
+val MondayFeelings = FontFamily(
+    Font(R.font.monday_feelings_regular, FontWeight.Normal)
+)
+
+val Saballing = FontFamily(
+    Font(R.font.saballing_regular, FontWeight.Normal)
+)
+
+val VeganStyle = FontFamily(
+    Font(R.font.vegan_style_regular, FontWeight.Normal)
+)
+
+val Sabering = FontFamily(
+    Font(R.font.sabering_regular, FontWeight.Normal)
+)
+
+val QuickKiss = FontFamily(
+    Font(R.font.quick_kiss_regular, FontWeight.Normal)
+)
+
+val Amsterdam = FontFamily(
+    Font(R.font.amsterdam_regular, FontWeight.Normal)
 )

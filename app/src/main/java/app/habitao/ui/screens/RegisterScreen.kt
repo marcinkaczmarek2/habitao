@@ -209,30 +209,6 @@ fun RegisterScreenInitialize(navController: NavController) {
             ) {
                 Text(text = "Register", color = Color.Black, fontWeight = FontWeight.Bold, fontSize = 18.sp)
             }
-
-            Spacer(modifier = Modifier.height(20.dp))
-
-            // LOGIN LINK
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .align(Alignment.CenterHorizontally),
-                horizontalArrangement = Arrangement.Center
-            ) {
-                Text(
-                    text = "Already have an account?",
-                    color = colors.IconTextNonActive,
-                )
-                Spacer(modifier = Modifier.width(4.dp))
-                Text(
-                    text = "Log In",
-                    color = colors.IconTextActive,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier.clickable {
-                        navController.navigate("login")
-                    }
-                )
-            }
         }
     }
 }

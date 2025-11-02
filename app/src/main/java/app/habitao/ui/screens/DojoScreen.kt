@@ -33,12 +33,6 @@ fun DojoScreenInitialize(navController: NavController) {
                 .padding(horizontal = 16.dp, vertical = 24.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(
-                text = "Dojo",
-                fontSize = 22.sp,
-                color = colors.IconTextNonActive
-            )
-            Spacer(modifier = Modifier.height(20.dp))
 
             MainDojoBox()
 

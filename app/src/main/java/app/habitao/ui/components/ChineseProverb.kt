@@ -16,10 +16,17 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import app.habitao.ui.theme.Amsterdam
 import java.time.LocalDate
 import app.habitao.ui.theme.DancingScript
 import app.habitao.ui.theme.GreatVibes
 import app.habitao.ui.theme.LocalAppColors
+import app.habitao.ui.theme.Manrope
+import app.habitao.ui.theme.MondayFeelings
+import app.habitao.ui.theme.QuickKiss
+import app.habitao.ui.theme.Saballing
+import app.habitao.ui.theme.Sabering
+import app.habitao.ui.theme.VeganStyle
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
@@ -78,7 +85,7 @@ fun ChineseProverbView(
             style = MaterialTheme.typography.bodyLarge.copy(
                 color = colors.HeaderColor,
                 fontSize = 25.sp,
-                fontFamily = GreatVibes,
+                fontFamily = Saballing,
                 fontStyle = FontStyle.Normal,
                 fontWeight = FontWeight.Medium,
                 textAlign = TextAlign.Center

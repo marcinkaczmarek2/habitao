@@ -85,12 +85,6 @@ fun SettingsPrivacyScreenInitialize(navController: NavController) {
             )
         }
 
-        Box(
-            modifier = Modifier.fillMaxSize(),
-            contentAlignment = Alignment.BottomCenter
-        ) {
-            LowerNavigationMenu(navController)
-        }
     }
 }
 
