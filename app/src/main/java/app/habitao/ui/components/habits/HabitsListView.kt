@@ -1,4 +1,4 @@
-package app.habitao.ui.components
+package app.habitao.ui.components.habits
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box

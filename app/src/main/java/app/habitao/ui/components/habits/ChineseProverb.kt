@@ -1,4 +1,4 @@
-package com.example.habits.ui.components
+package app.habitao.ui.components.habits
 
 import android.os.Build
 import androidx.annotation.RequiresApi
@@ -10,16 +10,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import java.time.LocalDate
-import app.habitao.ui.theme.DancingScript
-import app.habitao.ui.theme.GreatVibes
 import app.habitao.ui.theme.LocalAppColors
+import app.habitao.ui.theme.Manrope
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
@@ -67,8 +65,7 @@ fun ChineseProverbView(
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .height(120.dp)
-            .padding(12.dp)
+            .padding(10.dp)
             .background(Color.Transparent),
         contentAlignment = Alignment.Center
     ) {
@@ -77,8 +74,8 @@ fun ChineseProverbView(
             modifier = Modifier.padding(horizontal = 16.dp),
             style = MaterialTheme.typography.bodyLarge.copy(
                 color = colors.HeaderColor,
-                fontSize = 25.sp,
-                fontFamily = GreatVibes,
+                fontSize = 20.sp,
+                fontFamily = Manrope,
                 fontStyle = FontStyle.Normal,
                 fontWeight = FontWeight.Medium,
                 textAlign = TextAlign.Center
