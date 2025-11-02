@@ -75,8 +75,6 @@ fun ChineseProverbView(
                 color = colors.HeaderColor,
                 fontSize = 25.sp,
                 fontFamily = Saballing,
-                fontStyle = FontStyle.Normal,
-                fontWeight = FontWeight.Medium,
                 textAlign = TextAlign.Center
             )
         )
