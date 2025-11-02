@@ -23,6 +23,7 @@ data class AppColors(
     val HeaderColor: Color,
     val IconNonActive: Color,
     val IconTextNonActive: Color,
+    val LightGreyText: Color,
     val IconActive: Color,
     val IconTextActive: Color
 )
@@ -33,6 +34,7 @@ private val DarkColorScheme = AppColors(
     HeaderColor = Color.White,
     IconNonActive = Color(0xFF9CA3AF),
     IconTextNonActive = Color(0xFF8F96A1),
+    LightGreyText = Color(0xFFCCCCCC),
     IconActive = Color(0xFFFFD14D),
     IconTextActive = Color(0xfff4c862)
 )
@@ -44,6 +46,7 @@ private val LightColorScheme = AppColors(
     HeaderColor = Color.Black,
     IconNonActive = Color(0xFF4B5563),
     IconTextNonActive = Color(0xFF6B7280),
+    LightGreyText = Color(0xFFAFAFAF),
     IconActive = Color(0xFFFFD14D),
     IconTextActive = Color(0xFFB98E00)
 )

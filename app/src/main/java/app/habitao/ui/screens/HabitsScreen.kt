@@ -18,15 +18,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import app.habitao.ui.components.CalendarView
+import app.habitao.ui.components.habits.CalendarView
 import app.habitao.ui.components.LowerNavigationMenu
-import app.habitao.ui.components.*
-import app.habitao.ui.components.HabitsViewModel
-import com.example.habits.ui.components.ChineseProverbView
+import app.habitao.ui.components.habits.HabitsViewModel
+import app.habitao.ui.components.habits.ChineseProverbView
 import java.time.LocalDate
 import android.app.Application
 import androidx.lifecycle.ViewModelProvider
 import androidx.compose.ui.platform.LocalContext
+import app.habitao.ui.components.habits.AddHabitButton
+import app.habitao.ui.components.habits.Habit
+import app.habitao.ui.components.habits.HabitAdditionDialog
+import app.habitao.ui.components.habits.HabitDetailsDialog
+import app.habitao.ui.components.habits.HabitSelectionView
+import app.habitao.ui.components.habits.HabitsListView
 import app.habitao.ui.theme.LocalAppColors
 
 
@@ -58,7 +63,7 @@ fun HabitsScreenInitialize(navController: NavController) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(bottom = 60.dp)
+                .padding(bottom = 95.dp)
         ) {
             CalendarView(
                 selectedDate = selectedDate,
@@ -73,20 +78,12 @@ fun HabitsScreenInitialize(navController: NavController) {
                 onHabitClick = { habit ->
                     selectedHabit = habit
                     showDetailsDialog = true
+                },
+                onDelete = {
+                    viewModel.deleteHabit(it)
                 }
             )
 
-        }
-
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(bottom = 90.dp),
-            contentAlignment = Alignment.BottomCenter
-        ) {
-            AddHabitButton {
-                showSelection = true
-            }
         }
 
         Box(
@@ -95,6 +92,17 @@ fun HabitsScreenInitialize(navController: NavController) {
             contentAlignment = Alignment.BottomCenter
         ) {
             LowerNavigationMenu(navController)
+        }
+
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(bottom = 60.dp),
+            contentAlignment = Alignment.BottomCenter
+        ) {
+            AddHabitButton {
+                showSelection = true
+            }
         }
 
         if (showSelection) {

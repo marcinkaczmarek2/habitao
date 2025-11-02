@@ -1,4 +1,4 @@
-package app.habitao.ui.components
+package app.habitao.ui.components.habits
 
 import android.os.Build
 import androidx.annotation.RequiresApi
@@ -9,6 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import java.time.LocalDate
 
@@ -20,7 +21,7 @@ fun HabitAdditionDialog(
     onConfirm: (Habit) -> Unit,
     onDismiss: () -> Unit
 ) {
-    var importance by remember { mutableStateOf(2f) }
+    var importance by remember { mutableFloatStateOf(2f) }
     var description by remember { mutableStateOf(TextFieldValue("")) }
 
     AlertDialog(
@@ -45,7 +46,7 @@ fun HabitAdditionDialog(
                 onClick = {
                     onDismiss()
                 },
-                colors = ButtonDefaults.buttonColors(containerColor = Color.Gray)
+                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFB41414))
             ) {
                 Text("Cancel")
             }
@@ -66,6 +67,7 @@ fun HabitAdditionDialog(
                         activeTrackColor = Color.Gray
                     )
                 )
+                Spacer(modifier = Modifier.height(10.dp))
                 OutlinedTextField(
                     value = description,
                     onValueChange = { description = it },

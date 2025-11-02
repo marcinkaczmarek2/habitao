@@ -1,25 +1,17 @@
-package com.example.habits.ui.components
+package app.habitao.ui.components.habits
 
 import android.os.Build
 import androidx.annotation.RequiresApi
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.BasicText
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import app.habitao.ui.theme.Amsterdam
 import java.time.LocalDate
-import app.habitao.ui.theme.DancingScript
-import app.habitao.ui.theme.GreatVibes
 import app.habitao.ui.theme.LocalAppColors
 import app.habitao.ui.theme.Manrope
 import app.habitao.ui.theme.MondayFeelings
@@ -74,10 +66,7 @@ fun ChineseProverbView(
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .height(120.dp)
-            .padding(12.dp)
-            .background(Color.Transparent),
-        contentAlignment = Alignment.Center
+            .padding(10.dp)
     ) {
         BasicText(
             text = proverbOfTheDay,

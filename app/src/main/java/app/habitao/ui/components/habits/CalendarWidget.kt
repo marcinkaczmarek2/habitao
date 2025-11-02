@@ -1,4 +1,4 @@
-package app.habitao.ui.components
+package app.habitao.ui.components.habits
 
 import android.annotation.SuppressLint
 import android.os.Build
@@ -24,8 +24,9 @@ import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.YearMonth
 import app.habitao.R
-import app.habitao.ui.theme.Manrope
 import kotlin.math.abs
+import app.habitao.ui.theme.LocalAppColors
+
 
 @SuppressLint("FrequentlyChangingValue")
 @RequiresApi(Build.VERSION_CODES.O)
@@ -34,6 +35,7 @@ fun CalendarView(
     selectedDate: LocalDate,
     onDateSelected: (LocalDate) -> Unit
 ) {
+    val colors = LocalAppColors.current
 
     var showDialog by remember { mutableStateOf(false) }
     var isProgramScroll by remember { mutableStateOf(true) }
@@ -42,6 +44,8 @@ fun CalendarView(
 
     val currentMonth = selectedDate.month
     val currentYear = selectedDate.year
+    val formattedMonth = currentMonth.toString().lowercase().replaceFirstChar { it.uppercase() }
+
 
     Column(
         modifier = Modifier
@@ -58,17 +62,16 @@ fun CalendarView(
             Text(
                 modifier = Modifier
                     .padding(start = 5.dp),
-                text = "$currentMonth $currentYear",
-                fontSize = 24.sp,
+                text = "$formattedMonth $currentYear",
+                fontSize = 26.sp,
                 fontWeight = FontWeight.SemiBold,
-                color = Color.LightGray,
-                fontFamily = Manrope
+                color = colors.LightGreyText,
             )
             IconButton(onClick = { showDialog = true }) {
                 Icon(
                     painter = painterResource(id = R.drawable.calendar_icon),
                     contentDescription = "Open calendar",
-                    tint = Color.LightGray,
+                    tint = colors.LightGreyText,
                     modifier = Modifier.fillMaxSize()
                 )
             }
@@ -142,7 +145,7 @@ fun CalendarView(
                         .size((70 * scale).dp)
                         .background(
                             if (day == null) Color.Transparent
-                            else Color.LightGray.copy(alpha = scale * scale * scale),
+                            else Color.LightGray.copy(alpha = scale * scale * scale * scale * scale),
                             shape = MaterialTheme.shapes.small
                         )
                         .clickable {

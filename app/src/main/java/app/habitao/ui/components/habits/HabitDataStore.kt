@@ -1,4 +1,4 @@
-package app.habitao.ui.components
+package app.habitao.ui.components.habits
 
 import android.content.Context
 import androidx.datastore.preferences.core.edit

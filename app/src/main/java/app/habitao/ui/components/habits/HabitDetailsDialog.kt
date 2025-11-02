@@ -1,4 +1,4 @@
-package app.habitao.ui.components
+package app.habitao.ui.components.habits
 
 import android.os.Build
 import androidx.annotation.RequiresApi
