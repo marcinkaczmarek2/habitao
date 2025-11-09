@@ -1,26 +1,48 @@
 package app.habitao.ui.screens
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import app.habitao.R
 import app.habitao.ui.components.LowerNavigationMenu
-import app.habitao.ui.components.StatsBonsai
-import app.habitao.ui.components.StatsElemDescr
-import app.habitao.ui.components.StatsElemGraphBox
-import app.habitao.ui.components.StatsKarmaProgress
-import app.habitao.ui.components.StatsTotalKarma
+import app.habitao.ui.components.habits.Element
+import app.habitao.ui.components.stats.ElementsStats
+import app.habitao.ui.components.stats.StatsBonsai
+import app.habitao.ui.components.stats.StatsDebugBox
+import app.habitao.ui.components.stats.StatsElemDescr
+import app.habitao.ui.components.stats.StatsElemGraphBox
+import app.habitao.ui.components.stats.StatsKarmaProgress
+import app.habitao.ui.components.stats.StatsTotalKarma
+import app.habitao.ui.components.stats.StatsViewModel
 import app.habitao.ui.theme.LocalAppColors
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun StatsScreenInitialize(navController: NavController) {
+fun StatsScreenInitialize(navController: NavController, viewModel: StatsViewModel = viewModel()) {
+    val stats by viewModel.habitStats.collectAsState()
+
+    val airStats = stats.elementStats[Element.AIR] ?: ElementsStats()
+    val fireStats = stats.elementStats[Element.FIRE] ?: ElementsStats()
+    val waterStats = stats.elementStats[Element.WATER] ?: ElementsStats()
+    val earthStats = stats.elementStats[Element.EARTH] ?: ElementsStats()
+
+    val airPts = airStats.completedImportance
+    val firePts = fireStats.completedImportance
+    val waterPts = waterStats.completedImportance
+    val earthPts = earthStats.completedImportance
+
     val colors = LocalAppColors.current
     Box(
         modifier = Modifier
@@ -33,27 +55,25 @@ fun StatsScreenInitialize(navController: NavController) {
                 .padding(horizontal = 16.dp, vertical = 24.dp)
         ) {
             //total karma
-            StatsTotalKarma(1300)
+            StatsTotalKarma(stats.completedHabitsImportance * 10)
 
             //karma progress
-            StatsKarmaProgress(300, 1000)
+            StatsKarmaProgress(stats.completedHabits, 10)
 
             //bonsai tree - decoration
             //<a href="https://www.flaticon.com/free-icons/bonsai" title="bonsai icons">Bonsai icons created by Ylivdesign - Flaticon</a>
             //NOTE: I thought we may use a couple versions of images for that (idk - you can rm that)
             StatsBonsai(R.drawable.bonsai)
 
-            //tmp elements
-            var airPts = 103
-            var firePts = 110
-            var waterPts = 105
-            var earthPts = 100
-
             //elements description
             StatsElemDescr(airPts, firePts, waterPts, earthPts)
 
             //graph box
             StatsElemGraphBox(airPts, firePts, waterPts, earthPts)
+
+            //NOTE: use it for all information visibility
+            //StatsDebugBox(viewModel)
+            //TODO: implement scrolling on stats screen
         }
 
         //bottom menu

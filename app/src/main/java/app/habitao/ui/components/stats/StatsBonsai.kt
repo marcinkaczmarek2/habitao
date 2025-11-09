@@ -1,4 +1,4 @@
-package app.habitao.ui.components
+package app.habitao.ui.components.stats
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
