@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -44,6 +46,9 @@ fun StatsScreenInitialize(navController: NavController, viewModel: StatsViewMode
     val earthPts = earthStats.completedImportance
 
     val colors = LocalAppColors.current
+
+    val scrollState = rememberScrollState()
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -52,7 +57,9 @@ fun StatsScreenInitialize(navController: NavController, viewModel: StatsViewMode
 
         Column(
             modifier = Modifier
-                .padding(horizontal = 16.dp, vertical = 24.dp)
+                .fillMaxSize()
+                .verticalScroll(scrollState)
+                .padding(start = 16.dp, top = 24.dp, end = 16.dp, bottom = 112.dp)
         ) {
             //total karma
             StatsTotalKarma(stats.completedHabitsImportance * 10)
@@ -72,8 +79,7 @@ fun StatsScreenInitialize(navController: NavController, viewModel: StatsViewMode
             StatsElemGraphBox(airPts, firePts, waterPts, earthPts)
 
             //NOTE: use it for all information visibility
-            //StatsDebugBox(viewModel)
-            //TODO: implement scrolling on stats screen
+            StatsDebugBox(viewModel)
         }
 
         //bottom menu
