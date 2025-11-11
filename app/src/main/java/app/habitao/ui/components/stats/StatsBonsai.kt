@@ -9,16 +9,32 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import app.habitao.R
 
 @Composable
-fun StatsBonsai(@DrawableRes imgId: Int) {
+fun StatsBonsai(currentLevel: Int) {
+
+    //validation
+    if (currentLevel < -1 || currentLevel > spiritualLevels.size - 1) {
+        throw IllegalArgumentException("Current level is not in range of [0, ${spiritualLevels.size - 1}] or -1")
+    }
+
+    //choosing image
+    @DrawableRes var imageId: Int
+
+    if (currentLevel == -1) {
+        imageId = R.drawable.bonsai_dead
+    }
+    else {
+        imageId = spiritualLevels.get(currentLevel).imgId
+    }
 
     Image(
-        painter = painterResource(imgId),
+        painter = painterResource(imageId),
         contentDescription = "Rounded Logo",
         modifier = Modifier
             .padding(top = 8.dp)
             .fillMaxWidth()
-            .size(160.dp)
+            .size(220.dp)
     )
 }

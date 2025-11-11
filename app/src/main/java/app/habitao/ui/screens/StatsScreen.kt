@@ -53,24 +53,28 @@ fun StatsScreenInitialize(navController: NavController, viewModel: StatsViewMode
         modifier = Modifier
             .fillMaxSize()
             .background(colors.MainBackgroundColor)
+            .padding(top = 24.dp)
     ) {
 
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .verticalScroll(scrollState)
-                .padding(start = 16.dp, top = 24.dp, end = 16.dp, bottom = 112.dp)
+                .padding(start = 16.dp, top = 0.dp, end = 16.dp, bottom = 112.dp)
         ) {
             //total karma
             StatsTotalKarma(stats.completedHabitsImportance * 10)
 
             //karma progress
-            StatsKarmaProgress(stats.completedHabits, 10)
+            //TODO: leveling system
+            //NOTE: levels [0; 5]
+            StatsKarmaProgress(stats.completedHabits, 10, 0)
 
             //bonsai tree - decoration
             //<a href="https://www.flaticon.com/free-icons/bonsai" title="bonsai icons">Bonsai icons created by Ylivdesign - Flaticon</a>
-            //NOTE: I thought we may use a couple versions of images for that (idk - you can rm that)
-            StatsBonsai(R.drawable.bonsai)
+            //NOTE: those images could be improved
+            //VALUES [-1; 5] -> -1 dead bonsai
+            StatsBonsai(0)
 
             //elements description
             StatsElemDescr(airPts, firePts, waterPts, earthPts)
