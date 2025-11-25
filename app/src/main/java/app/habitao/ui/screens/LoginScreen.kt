@@ -79,7 +79,7 @@ fun LoginScreenInitialize(navController: NavController) {
                     focusedIndicatorColor = colors.IconActive,
                     unfocusedIndicatorColor = colors.IconNonActive,
                     cursorColor = colors.HeaderColor,
-                    focusedLabelColor = colors.IconActive,
+                    focusedLabelColor = colors.IconActive
                 )
             )
 

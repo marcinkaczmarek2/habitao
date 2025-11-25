@@ -28,7 +28,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.compose.ui.platform.LocalContext
 import app.habitao.ui.components.habits.AddHabitButton
 import app.habitao.ui.components.habits.Habit
-import app.habitao.ui.components.habits.HabitAdditionDialog
 import app.habitao.ui.components.habits.HabitDetailsDialog
 import app.habitao.ui.components.habits.HabitSelectionView
 import app.habitao.ui.components.habits.HabitsListView
@@ -117,7 +116,7 @@ fun HabitsScreenInitialize(navController: NavController) {
         }
 
         if (showAdditionDialog && selectedHabit != null) {
-            HabitAdditionDialog(
+            HabitsAddHabitScreen(
                 habit = selectedHabit!!,
                 selectedDate = selectedDate,
                 onConfirm = { newHabit ->
@@ -130,6 +129,7 @@ fun HabitsScreenInitialize(navController: NavController) {
                 }
             )
         }
+
 
         if (showDetailsDialog && selectedHabit != null) {
             HabitDetailsDialog(

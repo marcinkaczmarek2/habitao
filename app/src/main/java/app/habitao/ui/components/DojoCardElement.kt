@@ -107,7 +107,7 @@ fun FireCard(modifier: Modifier = Modifier) {
     ElementCardDojo(
         title = "Fire (火)",
         description = "Embodies passion, transformation, and energy. Fire habits focus on motivation, career, and personal drive.",
-        iconResId = R.drawable.fire_icon,
+        iconResId = R.drawable.fire_icon2,
         iconColor = FireColor,
         modifier = modifier
     )
