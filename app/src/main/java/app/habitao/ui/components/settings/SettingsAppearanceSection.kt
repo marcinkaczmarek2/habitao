@@ -1,38 +1,43 @@
-package app.habitao.ui.components
+package app.habitao.ui.components.settings
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
 import app.habitao.ui.theme.LocalAppColors
 
 @Composable
-fun SettingsLoginButton(navController: NavController) {
+fun SettingsAppearanceSection() {
     val colors = LocalAppColors.current
-    Box(
+
+    Column(
         modifier = Modifier
             .fillMaxWidth()
             .background(colors.PanelBackgroundNonActive, shape = MaterialTheme.shapes.medium)
-            .clickable {
-                navController.navigate("login")
-            }
-            .padding(vertical = 16.dp),
-        contentAlignment = Alignment.Center
+            .padding(20.dp)
     ) {
         Text(
-            text = "Log In",
+            text = "Appearance",
             fontSize = 18.sp,
-            color = colors.IconTextActive,
-            fontWeight = FontWeight.Bold
+            fontWeight = FontWeight.Bold,
+            color = colors.IconTextNonActive
         )
+
+        Spacer(modifier = Modifier.height(12.dp))
+
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text("Mode", color = colors.IconTextNonActive, fontSize = 16.sp)
+            SettingsYinYangToggle()
+        }
     }
 }

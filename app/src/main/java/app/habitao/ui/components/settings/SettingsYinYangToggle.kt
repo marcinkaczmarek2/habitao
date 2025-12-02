@@ -1,4 +1,4 @@
-package app.habitao.ui.components
+package app.habitao.ui.components.settings
 
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.background
@@ -16,8 +16,8 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.runtime.Composable
 import app.habitao.ui.theme.LocalIsDark
 import app.habitao.ui.theme.LocalAppColors
-import app.habitao.ui.theme.Toggle
 import androidx.compose.ui.platform.LocalContext
+import app.habitao.ui.components.ThemeDataStore
 import kotlinx.coroutines.launch
 
 

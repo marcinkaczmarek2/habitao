@@ -7,19 +7,16 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import app.habitao.ui.components.SettingsAppearanceSection
-import app.habitao.ui.components.SettingsLoginButton
+import app.habitao.ui.components.settings.SettingsAppearanceSection
+import app.habitao.ui.components.settings.SettingsLoginButton
 import app.habitao.ui.components.LowerNavigationMenu
-import app.habitao.ui.components.SettingsCategoryCard
-import app.habitao.ui.components.createSettingsClickActions
+import app.habitao.ui.components.settings.SettingsCategoryCard
+import app.habitao.ui.components.settings.createSettingsClickActions
 import app.habitao.ui.theme.LocalAppColors
 
 
@@ -42,27 +39,24 @@ fun SettingsScreenInitialize(navController: NavController) {
         ) {
             SettingsAppearanceSection()
 
-            Spacer(modifier = Modifier.height(40.dp))
+            Spacer(modifier = Modifier.height(120.dp))
             SettingsCategoryCard(
                 title = "Account Information",
                 onClick = actions.onAccountClick
             )
 
-            Spacer(modifier = Modifier.height(10.dp))
+            Spacer(modifier = Modifier.height(20.dp))
             SettingsCategoryCard(
                 title = "Notifications",
                 onClick = actions.onNotificationsClick
             )
 
-            Spacer(modifier = Modifier.height(10.dp))
+            Spacer(modifier = Modifier.height(20.dp))
             SettingsCategoryCard(
                 title = "Privacy",
                 onClick = actions.onPrivacyClick
             )
 
-            Spacer(modifier = Modifier.height(40.dp))
-            //TODO warunek sprawdzający czy użytkownik jest zalogowany i wyświetlanie odpowiedniego guzika
-            SettingsLoginButton(navController)
         }
 
         Box(

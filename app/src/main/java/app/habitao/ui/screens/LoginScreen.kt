@@ -15,14 +15,18 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import app.habitao.ui.components.SettingsTopBar
+import app.habitao.ui.components.settings.SettingsTopBar
 import app.habitao.R
+import app.habitao.ui.components.settings.AuthViewModel
 import app.habitao.ui.theme.LocalAppColors
 
 @Composable
 fun LoginScreenInitialize(navController: NavController) {
+    val viewModel: AuthViewModel = viewModel()
     val colors = LocalAppColors.current
+
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var passwordVisible by remember { mutableStateOf(false) }
@@ -69,8 +73,7 @@ fun LoginScreenInitialize(navController: NavController) {
                 onValueChange = { email = it },
                 label = { Text("Email") },
                 singleLine = true,
-                modifier = Modifier
-                    .fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth(),
                 colors = TextFieldDefaults.colors(
                     focusedTextColor = colors.HeaderColor,
                     unfocusedTextColor = colors.HeaderColor,
@@ -99,11 +102,14 @@ fun LoginScreenInitialize(navController: NavController) {
                         painterResource(id = R.drawable.password_hidden_icon)
 
                     IconButton(onClick = { passwordVisible = !passwordVisible }) {
-                        Icon(painter = image, contentDescription = null, tint = colors.IconNonActive)
+                        Icon(
+                            painter = image,
+                            contentDescription = null,
+                            tint = colors.IconNonActive
+                        )
                     }
                 },
-                modifier = Modifier
-                    .fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth(),
                 colors = TextFieldDefaults.colors(
                     focusedTextColor = colors.HeaderColor,
                     unfocusedTextColor = colors.HeaderColor,
@@ -121,7 +127,15 @@ fun LoginScreenInitialize(navController: NavController) {
             // LOGIN BUTTON
             Button(
                 onClick = {
-                    // TODO: implement login logic
+                    viewModel.login(
+                        email = email,
+                        password = password,
+                        onSuccess = {
+                            navController.navigate("habits") {
+                                popUpTo("login") { inclusive = true }
+                            }
+                        }
+                    )
                 },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -129,7 +143,28 @@ fun LoginScreenInitialize(navController: NavController) {
                 shape = RoundedCornerShape(12.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = colors.IconActive)
             ) {
-                Text(text = "Log In", color = Color.Black, fontWeight = FontWeight.Bold, fontSize = 18.sp)
+                Text(
+                    "Log In",
+                    color = Color.Black,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 18.sp
+                )
+            }
+
+            // ERROR
+            viewModel.authError?.let { error ->
+                Spacer(modifier = Modifier.height(16.dp))
+                Text(
+                    text = error,
+                    color = Color.Red,
+                    modifier = Modifier.align(Alignment.CenterHorizontally)
+                )
+            }
+
+            // LOADER
+            if (viewModel.loading) {
+                Spacer(modifier = Modifier.height(16.dp))
+                CircularProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))
             }
 
             Spacer(modifier = Modifier.height(20.dp))
@@ -158,3 +193,4 @@ fun LoginScreenInitialize(navController: NavController) {
         }
     }
 }
+

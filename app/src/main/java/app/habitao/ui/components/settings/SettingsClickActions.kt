@@ -1,4 +1,4 @@
-package app.habitao.ui.components
+package app.habitao.ui.components.settings
 
 import androidx.navigation.NavController
 

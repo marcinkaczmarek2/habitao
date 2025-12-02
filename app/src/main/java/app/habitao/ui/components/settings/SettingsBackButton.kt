@@ -1,10 +1,9 @@
-package app.habitao.ui.components
+package app.habitao.ui.components.settings
 
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavController
 import app.habitao.R
 import app.habitao.ui.theme.LocalAppColors

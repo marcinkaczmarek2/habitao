@@ -11,9 +11,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import app.habitao.ui.components.*
 import app.habitao.ui.components.LowerNavigationMenu
-import app.habitao.ui.components.MainDojoBox
+import app.habitao.ui.components.dojo.AirCard
+import app.habitao.ui.components.dojo.EarthCard
+import app.habitao.ui.components.dojo.FireCard
+import app.habitao.ui.components.dojo.MainDojoBox
+import app.habitao.ui.components.dojo.WaterCard
 import app.habitao.ui.theme.LocalAppColors
 
 @Composable

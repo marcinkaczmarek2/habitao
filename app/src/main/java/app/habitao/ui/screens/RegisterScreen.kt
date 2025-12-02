@@ -1,7 +1,6 @@
 package app.habitao.ui.screens
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
@@ -16,13 +15,19 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import app.habitao.ui.components.LowerNavigationMenu
-import app.habitao.ui.components.SettingsTopBar
+import app.habitao.ui.components.settings.SettingsTopBar
 import app.habitao.R
 import app.habitao.ui.theme.LocalAppColors
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavOptions
+import app.habitao.ui.components.settings.AuthViewModel
 
 @Composable
 fun RegisterScreenInitialize(navController: NavController) {
+    val viewModel: AuthViewModel = viewModel()
+    var errorMessage by remember { mutableStateOf<String?>(null) }
     val colors = LocalAppColors.current
     var name by remember { mutableStateOf("") }
     var surname by remember { mutableStateOf("") }
@@ -146,7 +151,11 @@ fun RegisterScreenInitialize(navController: NavController) {
                         painterResource(id = R.drawable.password_hidden_icon)
 
                     IconButton(onClick = { passwordVisible = !passwordVisible }) {
-                        Icon(painter = image, contentDescription = null, tint = colors.IconNonActive)
+                        Icon(
+                            painter = image,
+                            contentDescription = null,
+                            tint = colors.IconNonActive
+                        )
                     }
                 },
                 modifier = Modifier.fillMaxWidth(),
@@ -178,7 +187,11 @@ fun RegisterScreenInitialize(navController: NavController) {
                         painterResource(id = R.drawable.password_hidden_icon)
 
                     IconButton(onClick = { confirmPasswordVisible = !confirmPasswordVisible }) {
-                        Icon(painter = image, contentDescription = null, tint = colors.IconNonActive)
+                        Icon(
+                            painter = image,
+                            contentDescription = null,
+                            tint = colors.IconNonActive
+                        )
                     }
                 },
                 modifier = Modifier.fillMaxWidth(),
@@ -197,9 +210,25 @@ fun RegisterScreenInitialize(navController: NavController) {
             Spacer(modifier = Modifier.height(40.dp))
 
             // REGISTER BUTTON
+            // REGISTER BUTTON
             Button(
                 onClick = {
-                    // TODO: implement register logic
+                    if (password != confirmPassword) {
+                        viewModel.authError = "Passwords do not match"
+                    } else {
+                        viewModel.register(
+                            name = name,
+                            surname = surname,
+                            email = email,
+                            password = password
+                        ) {
+                            // Po udanej rejestracji, użytkownik od razu logowany jest w Firebase
+                            // -> przekierowanie do HabitsScreenInitialize
+                            navController.navigate("habits") {
+                                popUpTo("register") { inclusive = true }
+                            }
+                        }
+                    }
                 },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -207,7 +236,28 @@ fun RegisterScreenInitialize(navController: NavController) {
                 shape = RoundedCornerShape(12.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = colors.IconActive)
             ) {
-                Text(text = "Register", color = Color.Black, fontWeight = FontWeight.Bold, fontSize = 18.sp)
+                Text(
+                    "Register",
+                    color = Color.Black,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 18.sp
+                )
+            }
+
+            // Wyświetlanie błędu
+            viewModel.authError?.let { error ->
+                Spacer(modifier = Modifier.height(16.dp))
+                Text(
+                    text = error,
+                    color = Color.Red,
+                    modifier = Modifier.align(Alignment.CenterHorizontally)
+                )
+            }
+
+            // Loader
+            if (viewModel.loading) {
+                Spacer(modifier = Modifier.height(16.dp))
+                CircularProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))
             }
         }
     }
