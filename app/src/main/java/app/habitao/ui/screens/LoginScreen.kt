@@ -9,6 +9,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -20,7 +21,9 @@ import androidx.navigation.NavController
 import app.habitao.ui.components.settings.SettingsTopBar
 import app.habitao.R
 import app.habitao.ui.components.settings.AuthViewModel
+import app.habitao.ui.components.stats.AppLaunchDataStore
 import app.habitao.ui.theme.LocalAppColors
+import kotlinx.coroutines.launch
 
 @Composable
 fun LoginScreenInitialize(navController: NavController) {
@@ -31,10 +34,15 @@ fun LoginScreenInitialize(navController: NavController) {
     var password by remember { mutableStateOf("") }
     var passwordVisible by remember { mutableStateOf(false) }
 
+    val context = LocalContext.current
+    val scope = rememberCoroutineScope()
+
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(colors.MainBackgroundColor)
+            .statusBarsPadding()
+            .navigationBarsPadding()
     ) {
         Column(
             modifier = Modifier
@@ -131,8 +139,13 @@ fun LoginScreenInitialize(navController: NavController) {
                         email = email,
                         password = password,
                         onSuccess = {
-                            navController.navigate("habits") {
-                                popUpTo("login") { inclusive = true }
+                            scope.launch {
+                                // ✅ oznaczamy, że pierwsze uruchomienie już było
+                                AppLaunchDataStore.setFirstLaunch(context, false)
+
+                                navController.navigate("habits") {
+                                    popUpTo("login") { inclusive = true }
+                                }
                             }
                         }
                     )
@@ -150,6 +163,8 @@ fun LoginScreenInitialize(navController: NavController) {
                     fontSize = 18.sp
                 )
             }
+
+
 
             // ERROR
             viewModel.authError?.let { error ->
@@ -190,6 +205,23 @@ fun LoginScreenInitialize(navController: NavController) {
                     }
                 )
             }
+            Spacer(Modifier.height(24.dp))
+
+            // przycisk "Pomiń"
+            Text(
+                text = "Continue without account",
+                modifier = Modifier
+                    .padding(top = 8.dp)
+                    .clickable {
+                        scope.launch {
+                            AppLaunchDataStore.setFirstLaunch(context, false)
+                            navController.navigate("habits") {
+                                popUpTo("login") { inclusive = true }
+                            }
+                        }
+                    },
+                color = colors.IconTextNonActive
+            )
         }
     }
 }

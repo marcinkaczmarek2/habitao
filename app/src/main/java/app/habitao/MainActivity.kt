@@ -24,6 +24,7 @@ import app.habitao.ui.theme.HabitaoTheme
 import app.habitao.ui.theme.LocalAppColors
 import androidx.compose.runtime.collectAsState
 import app.habitao.ui.components.ThemeDataStore
+import app.habitao.ui.screens.SplashScreenInitialize
 
 class MainActivity : ComponentActivity() {
 
@@ -44,7 +45,8 @@ class MainActivity : ComponentActivity() {
                     window.decorView.setBackgroundColor(colors.MainBackgroundColor.toArgb())
                 }
                 val navController = rememberNavController()
-                NavHost(navController = navController, startDestination = "habits") {
+                NavHost(navController = navController, startDestination = "splash") {
+                    composable("splash") { SplashScreenInitialize(navController) }
                     composable("habits") { HabitsScreenInitialize(navController) }
                     composable("stats") { StatsScreenInitialize(navController) }
                     composable("settings") { SettingsScreenInitialize(navController) }

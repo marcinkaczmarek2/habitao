@@ -42,6 +42,8 @@ fun RegisterScreenInitialize(navController: NavController) {
         modifier = Modifier
             .fillMaxSize()
             .background(colors.MainBackgroundColor)
+            .statusBarsPadding()
+            .navigationBarsPadding()
     ) {
         Column(
             modifier = Modifier

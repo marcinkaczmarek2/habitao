@@ -26,6 +26,8 @@ fun SettingsPrivacyScreenInitialize(navController: NavController) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
+                .statusBarsPadding()
+                .navigationBarsPadding()
                 .padding(horizontal = 16.dp, vertical = 24.dp)
                 .verticalScroll(scrollState)
         ) {

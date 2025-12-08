@@ -24,6 +24,8 @@ fun SettingsNotificationScreenInitialize(navController: NavController) {
         modifier = Modifier
             .fillMaxSize()
             .background(colors.MainBackgroundColor)
+            .statusBarsPadding()
+            .navigationBarsPadding()
             .padding(horizontal = 16.dp, vertical = 24.dp)
             .verticalScroll(scrollState)
     ) {

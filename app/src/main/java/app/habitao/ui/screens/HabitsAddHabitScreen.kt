@@ -80,6 +80,8 @@ fun HabitsAddHabitScreen(
         modifier = Modifier
             .fillMaxSize()
             .background(colors.MainBackgroundColor)
+            .statusBarsPadding()
+            .navigationBarsPadding()
     ) {
         Column(
             modifier = Modifier

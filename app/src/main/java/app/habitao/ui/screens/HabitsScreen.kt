@@ -24,6 +24,8 @@ import app.habitao.ui.components.habits.HabitsViewModel
 import app.habitao.ui.components.habits.ChineseProverbView
 import java.time.LocalDate
 import android.app.Application
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.lifecycle.ViewModelProvider
 import androidx.compose.ui.platform.LocalContext
 import app.habitao.ui.components.habits.AddHabitButton
@@ -58,6 +60,8 @@ fun HabitsScreenInitialize(navController: NavController) {
         modifier = Modifier
             .fillMaxSize()
             .background(colors.MainBackgroundColor)
+            .statusBarsPadding()
+            .navigationBarsPadding()
     ) {
         Column(
             modifier = Modifier
