@@ -1,6 +1,8 @@
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -16,12 +18,14 @@ fun SettingsNotificationScreenInitialize(navController: NavController) {
     val colors = LocalAppColors.current
     var generalToggles by remember { mutableStateOf(listOf(true, false)) }
     var karmaToggles by remember { mutableStateOf(listOf(false, true, false)) }
+    val scrollState = rememberScrollState()
 
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(colors.MainBackgroundColor)
             .padding(horizontal = 16.dp, vertical = 24.dp)
+            .verticalScroll(scrollState)
     ) {
 
         SettingsTopBar(

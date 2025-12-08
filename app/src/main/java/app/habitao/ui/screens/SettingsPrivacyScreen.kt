@@ -1,6 +1,8 @@
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -14,6 +16,7 @@ import app.habitao.ui.theme.LocalAppColors
 fun SettingsPrivacyScreenInitialize(navController: NavController) {
     val colors = LocalAppColors.current
     var shareUserData by remember { mutableStateOf(false) }
+    val scrollState = rememberScrollState()
 
     Box(
         modifier = Modifier
@@ -24,6 +27,7 @@ fun SettingsPrivacyScreenInitialize(navController: NavController) {
             modifier = Modifier
                 .fillMaxSize()
                 .padding(horizontal = 16.dp, vertical = 24.dp)
+                .verticalScroll(scrollState)
         ) {
 
             SettingsTopBar(

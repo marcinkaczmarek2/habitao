@@ -2,6 +2,8 @@ package app.habitao.ui.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -23,6 +25,7 @@ import app.habitao.ui.theme.LocalAppColors
 fun DojoScreenInitialize(navController: NavController) {
 
     val colors = LocalAppColors.current
+    val scrollState = rememberScrollState()
 
     Box(
         modifier = Modifier
@@ -33,8 +36,10 @@ fun DojoScreenInitialize(navController: NavController) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(horizontal = 16.dp, vertical = 24.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+                .padding(horizontal = 16.dp, vertical = 24.dp)
+                .verticalScroll(scrollState)
+                .padding(bottom = 80.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
             MainDojoBox()
@@ -55,7 +60,6 @@ fun DojoScreenInitialize(navController: NavController) {
             WaterCard()
             FireCard()
             AirCard()
-
         }
 
         Box(
