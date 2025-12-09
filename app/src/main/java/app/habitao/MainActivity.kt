@@ -6,6 +6,7 @@ import android.os.Build
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import android.os.Bundle
+import android.view.WindowInsetsController
 import androidx.activity.ComponentActivity
 import androidx.annotation.RequiresApi
 import androidx.compose.runtime.SideEffect
@@ -23,6 +24,7 @@ import app.habitao.ui.screens.SettingsScreenInitialize
 import app.habitao.ui.theme.HabitaoTheme
 import app.habitao.ui.theme.LocalAppColors
 import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.graphics.Color
 import app.habitao.ui.components.ThemeDataStore
 import app.habitao.ui.screens.SplashScreenInitialize
 
@@ -36,6 +38,7 @@ class MainActivity : ComponentActivity() {
 
             val isDarkFlow = ThemeDataStore.getTheme(applicationContext)
             val isDark = isDarkFlow.collectAsState(initial = true).value
+            setStatusBarColor(isDark)
 
             HabitaoTheme(darkTheme = isDark) {
                 val colors = LocalAppColors.current
@@ -59,4 +62,29 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+
+    fun setStatusBarColor(isDark: Boolean) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) {
+            return
+        }
+
+        val window = this.window
+        val controller = window.insetsController ?: return
+
+        if (!isDark) {
+            //light mode - dark icons
+            controller.setSystemBarsAppearance(
+                WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS,
+                WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
+            )
+        }
+        else {
+            //dark mode - white icons
+            controller.setSystemBarsAppearance(
+                0,
+                WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
+            )
+        }
+    }
+
 }
