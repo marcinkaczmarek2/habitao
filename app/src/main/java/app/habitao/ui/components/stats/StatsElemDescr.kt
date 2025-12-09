@@ -1,5 +1,6 @@
 package app.habitao.ui.components.stats
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -26,7 +27,8 @@ fun StatsElemDescr(
 ) {
     //Input Control
     if (airPts < 0 || firePts < 0 || waterPts < 0 || earthPts < 0) {
-        throw IllegalArgumentException("Element points must be non-negative")
+        Log.w("StatsElemDescr", "Element points must be non-negative")
+        return
     }
 
     //no elements

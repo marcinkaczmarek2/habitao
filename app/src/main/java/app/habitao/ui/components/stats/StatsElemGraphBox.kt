@@ -1,5 +1,6 @@
 package app.habitao.ui.components.stats
 
+import android.util.Log
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -35,7 +36,7 @@ fun StatsElemGraphBox(
 ) {
     //Input Control
     if (airPts < 0 || firePts < 0 || waterPts < 0 || earthPts < 0) {
-        throw IllegalArgumentException("Element points must be non-negative")
+        Log.w("StatsElemGraphBox", "Element points must be non-negative")
     }
 
     if (airPts == 0 && firePts == 0 && waterPts == 0 && earthPts == 0) {

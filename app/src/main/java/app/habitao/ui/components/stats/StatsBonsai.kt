@@ -1,5 +1,6 @@
 package app.habitao.ui.components.stats
 
+import android.util.Log
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -16,7 +17,8 @@ fun StatsBonsai(currentLevel: Int) {
 
     //validation
     if (currentLevel < -1 || currentLevel > spiritualLevels.size - 1) {
-        throw IllegalArgumentException("Current level is not in range of [0, ${spiritualLevels.size - 1}] or -1")
+        Log.w("StatsBonsai", "Current level is not in range of [0, ${spiritualLevels.size - 1}] or -1")
+        return
     }
 
     //choosing image

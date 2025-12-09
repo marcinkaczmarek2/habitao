@@ -1,5 +1,6 @@
 package app.habitao.ui.components.stats
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -27,19 +28,23 @@ fun StatsKarmaProgress(karmaProgress: Int, karmaToNextLv: Int, currentLevel: Int
 
     //input control
     if (karmaToNextLv < 1) {
-        throw IllegalArgumentException("Karma to next level must be positive")
+        Log.w("StatsKarmaProgress", "Karma to next level must be positive")
+        return
     }
 
     if (karmaProgress < 0) {
-        throw IllegalArgumentException("Karma progress must be non-negative")
+        Log.w("StatsKarmaProgress", "Karma progress must be non-negative")
+        return
     }
 
     if (karmaProgress > karmaToNextLv) {
-        throw IllegalArgumentException("Karma progress cannot exceed karma to next level")
+        Log.w("StatsKarmaProgress", "Karma progress cannot exceed karma to next level")
+        return
     }
 
     if (currentLevel < 0 || currentLevel > spiritualLevels.size - 1) {
-        throw IllegalArgumentException("Current level is not in range of [0, ${spiritualLevels.size - 1}]")
+        Log.w("StatsKarmaProgress", "Current level is not in range of [0, ${spiritualLevels.size - 1}]")
+        return
     }
 
     //spiritual level

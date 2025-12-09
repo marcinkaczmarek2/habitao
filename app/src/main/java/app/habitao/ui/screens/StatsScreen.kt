@@ -1,6 +1,7 @@
 package app.habitao.ui.screens
 
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -29,11 +30,13 @@ import app.habitao.ui.components.stats.StatsElemGraphBox
 import app.habitao.ui.components.stats.StatsKarmaProgress
 import app.habitao.ui.components.stats.StatsTotalKarma
 import app.habitao.ui.components.stats.StatsViewModel
+import app.habitao.ui.components.stats.spiritualLevels
 import app.habitao.ui.theme.LocalAppColors
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun StatsScreenInitialize(navController: NavController, viewModel: StatsViewModel = viewModel()) {
+    //data from DB
     val stats by viewModel.habitStats.collectAsState()
 
     val airStats = stats.elementStats[Element.AIR] ?: ElementsStats()
@@ -48,6 +51,37 @@ fun StatsScreenInitialize(navController: NavController, viewModel: StatsViewMode
 
     val colors = LocalAppColors.current
 
+    //karma
+    val totalKarma = stats.completedHabitsImportance * 10
+
+    Log.d("Stats", "totalKarma: $totalKarma")
+
+    //determining level
+    var currentLevel = 0
+    for (i in 1..spiritualLevels.size - 1) {
+        if (spiritualLevels[i].karmaThresh <= totalKarma) {
+            currentLevel = i
+        }
+        else {
+            break
+        }
+    }
+
+    Log.d("Stats", "currLv: $currentLevel")
+
+    //determining karma for current level
+    val karmaProgress = totalKarma - spiritualLevels[currentLevel].karmaThresh
+
+    Log.d("Stats", "karmaProgress: $karmaProgress")
+
+    var karmaToNextLv = Int.MAX_VALUE
+    if (currentLevel < spiritualLevels.size - 1) {
+        karmaToNextLv = spiritualLevels[currentLevel + 1].karmaThresh - spiritualLevels[currentLevel].karmaThresh
+    }
+
+    Log.d("Stats", "karmaToNextLv: $karmaToNextLv")
+
+    //GUI
     val scrollState = rememberScrollState()
 
     Box(
@@ -66,18 +100,18 @@ fun StatsScreenInitialize(navController: NavController, viewModel: StatsViewMode
                 .padding(start = 16.dp, top = 0.dp, end = 16.dp, bottom = 112.dp)
         ) {
             //total karma
-            StatsTotalKarma(stats.completedHabitsImportance * 10)
+            StatsTotalKarma(totalKarma)
 
             //karma progress
-            //TODO: leveling system
-            //NOTE: levels [0; 5]
-            StatsKarmaProgress(stats.completedHabits, 10, 0)
+            StatsKarmaProgress(karmaProgress, karmaToNextLv, currentLevel)
 
             //bonsai tree - decoration
             //<a href="https://www.flaticon.com/free-icons/bonsai" title="bonsai icons">Bonsai icons created by Ylivdesign - Flaticon</a>
-            //NOTE: those images could be improved
+            //TODO: those images could be improved
             //VALUES [-1; 5] -> -1 dead bonsai
-            StatsBonsai(0)
+            //TODO: negative karma/sth for dead tree
+
+            StatsBonsai(currentLevel)
 
             //elements description
             StatsElemDescr(airPts, firePts, waterPts, earthPts)
