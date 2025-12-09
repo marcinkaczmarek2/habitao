@@ -100,8 +100,8 @@ fun HabitsScreenInitialize(navController: NavController) {
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(bottom = 60.dp),
-            contentAlignment = Alignment.BottomCenter
+                .padding(bottom = 105.dp, end = 10.dp),
+            contentAlignment = Alignment.BottomEnd
         ) {
             AddHabitButton {
                 showSelection = true

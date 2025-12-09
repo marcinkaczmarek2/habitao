@@ -29,7 +29,7 @@ fun AddHabitButton(onClick: () -> Unit) {
             contentColor = Color.Black),
         modifier = Modifier
             .size(70.dp)
-            .graphicsLayer(rotationZ = 45f)
+            //.graphicsLayer(rotationZ = 45f)
             .clip(MaterialTheme.shapes.medium)
             .background(colors.IconActive),
         contentPadding = PaddingValues(8.dp)
@@ -40,7 +40,7 @@ fun AddHabitButton(onClick: () -> Unit) {
             colorFilter = ColorFilter.tint(color = Color(0xFF4B5563)),
             modifier = Modifier
                 .fillMaxSize()
-                .graphicsLayer(rotationZ = -45f)
+                //.graphicsLayer(rotationZ = -45f)
         )
     }
 }
