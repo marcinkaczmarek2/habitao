@@ -19,7 +19,6 @@ data class Habit @RequiresApi(Build.VERSION_CODES.O) constructor(
     val element: Element,
     var isPopular: Boolean,
     val importance: Int = 1,
-    //val userNote: String? = null,
     @Serializable(with = DateSerializer::class)
     val date: LocalDate,
     var isCompleted: Boolean = false

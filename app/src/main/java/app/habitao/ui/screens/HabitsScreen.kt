@@ -97,14 +97,19 @@ fun HabitsScreenInitialize(navController: NavController) {
             LowerNavigationMenu(navController)
         }
 
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(bottom = 105.dp, end = 10.dp),
-            contentAlignment = Alignment.BottomEnd
-        ) {
-            AddHabitButton {
-                showSelection = true
+        val today = LocalDate.now()
+        val showAddButton = !selectedDate.isBefore(today.minusDays(1))
+
+        if (showAddButton) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(bottom = 105.dp, end = 10.dp),
+                contentAlignment = Alignment.BottomEnd
+            ) {
+                AddHabitButton {
+                    showSelection = true
+                }
             }
         }
 

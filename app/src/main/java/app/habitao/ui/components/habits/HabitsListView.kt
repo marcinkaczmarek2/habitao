@@ -1,5 +1,7 @@
 package app.habitao.ui.components.habits
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -33,7 +35,14 @@ import app.habitao.ui.theme.FireColor
 import app.habitao.ui.theme.LocalAppColors
 import app.habitao.ui.theme.WaterColor
 import app.habitao.ui.theme.TextOnColor
+import java.time.LocalDate
 
+/**
+ * HabitsListView - pokazuje listę habitów dla wybranego dnia.
+ * - sortuje: najpierw not completed, potem completed
+ * - przekazuje akcje: toggle, click, delete
+ */
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun HabitsListView(
     habits: List<Habit>,
@@ -55,33 +64,41 @@ fun HabitsListView(
                 modifier = Modifier.padding(16.dp)
             )
         }
-    } else {
-        LazyColumn(
-            modifier = Modifier.fillMaxWidth(),
-            contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp)
-        ) {
-            items(
-                items = habits,
-                key = { it.id }
-            ) { habit ->
-                SwipeableHabitItem(
-                    habit = habit,
-                    onClick = { onHabitClick(habit) },
-                    onToggle = { onToggle(habit) },
-                    onDelete = { onDelete(habit) }
-                )
-            }
+        return
+    }
+
+    val sorted = habits.sortedWith(compareBy({ it.isCompleted }, { it.id }))
+
+    LazyColumn(
+        modifier = Modifier.fillMaxWidth(),
+        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp)
+    ) {
+        items(
+            items = sorted,
+            key = { it.id }
+        ) { habit ->
+            SwipeableHabitItem(
+                habit = habit,
+                onClick = { onHabitClick(habit) },
+                onToggle = {
+                    val today = LocalDate.now()
+                    val allowed = !habit.date.isAfter(today) && !habit.date.isBefore(today.minusDays(1))
+                    if (allowed) onToggle(habit)
+                },
+                onDelete = { onDelete(habit) }
+            )
         }
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun SwipeableHabitItem(
     habit: Habit,
     onToggle: () -> Unit,
     onClick: () -> Unit,
     onDelete: () -> Unit
-){
+) {
     var offsetX by remember { mutableFloatStateOf(0f) }
 
     Box(
@@ -103,7 +120,6 @@ fun SwipeableHabitItem(
                     }
                 )
             }
-
     ) {
         when {
             offsetX > 0 -> {
@@ -124,7 +140,7 @@ fun SwipeableHabitItem(
                         modifier = Modifier
                             .padding(start = 10.dp)
                             .size(40.dp)
-                        )
+                    )
                 }
             }
 
@@ -163,9 +179,9 @@ fun SwipeableHabitItem(
             )
         }
     }
-
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun HabitItem(
     habit: Habit,
@@ -173,12 +189,15 @@ fun HabitItem(
     onClick: () -> Unit,
 ) {
 
-    val elementColor = when (habit.element) {
+    val elementColorBase = when (habit.element) {
         Element.FIRE -> FireColor
         Element.WATER -> WaterColor
         Element.EARTH -> EarthColor
         Element.AIR -> AirColor
     }
+
+    val containerAlpha = if (habit.isCompleted) 0.4f else 1f
+    val containerColor = elementColorBase.copy(alpha = containerAlpha)
 
     val elementIcon = when (habit.element) {
         Element.FIRE -> R.drawable.fire_icon2
@@ -187,12 +206,15 @@ fun HabitItem(
         Element.AIR -> R.drawable.air_icon
     }
 
+    val today = LocalDate.now()
+    val allowedToToggle = !habit.date.isAfter(today) && !habit.date.isBefore(today.minusDays(1))
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 6.dp)
             .clickable(onClick = onClick),
-        colors = CardDefaults.cardColors(containerColor = elementColor),
+        colors = CardDefaults.cardColors(containerColor = containerColor),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
     ) {
         Row(
@@ -236,7 +258,10 @@ fun HabitItem(
 
             Checkbox(
                 checked = habit.isCompleted,
-                onCheckedChange = { onToggle() },
+                onCheckedChange = {
+                    if (allowedToToggle) onToggle()
+                },
+                enabled = allowedToToggle,
                 colors = CheckboxDefaults.colors(checkedColor = Color(0xFF2C7A00))
             )
         }
