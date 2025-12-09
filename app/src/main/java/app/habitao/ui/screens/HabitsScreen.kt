@@ -36,25 +36,22 @@ import app.habitao.ui.components.habits.HabitsListView
 import app.habitao.ui.theme.LocalAppColors
 
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun HabitsScreenInitialize(navController: NavController) {
     val colors = LocalAppColors.current
     val context = LocalContext.current
+
     val viewModel: HabitsViewModel = viewModel(
         factory = ViewModelProvider.AndroidViewModelFactory(context.applicationContext as Application)
     )
-
-    var selectedDate by remember { mutableStateOf(LocalDate.now()) }
 
     var showSelection by remember { mutableStateOf(false) }
     var showAdditionDialog by remember { mutableStateOf(false) }
     var showDetailsDialog by remember { mutableStateOf(false) }
     var selectedHabit by remember { mutableStateOf<Habit?>(null) }
 
-    LaunchedEffect(selectedDate) {
-        viewModel.loadHabitsForDate(selectedDate)
-    }
+    // Używamy ViewModel.selectedDate, ale przy logice przycisku Add korzystamy ze starego kryterium
+    val selectedDate = viewModel.selectedDate
 
     Box(
         modifier = Modifier
@@ -68,13 +65,16 @@ fun HabitsScreenInitialize(navController: NavController) {
                 .fillMaxSize()
                 .padding(bottom = 95.dp)
         ) {
+            // Calendar
             CalendarView(
                 selectedDate = selectedDate,
-                onDateSelected = { selectedDate = it }
+                onDateSelected = { viewModel.updateSelectedDate(it) }
             )
 
+            // Chinese Proverb
             ChineseProverbView(selectedDate = selectedDate)
 
+            // Lista habitów
             HabitsListView(
                 habits = viewModel.habitsForSelectedDate,
                 onToggle = { viewModel.toggleHabitCompletion(it.id) },
@@ -82,24 +82,21 @@ fun HabitsScreenInitialize(navController: NavController) {
                     selectedHabit = habit
                     showDetailsDialog = true
                 },
-                onDelete = {
-                    viewModel.deleteHabit(it)
-                }
+                onDelete = { viewModel.deleteHabit(it) }
             )
-
         }
 
+        // Dolne menu
         Box(
-            modifier = Modifier
-                .fillMaxSize(),
+            modifier = Modifier.fillMaxSize(),
             contentAlignment = Alignment.BottomCenter
         ) {
             LowerNavigationMenu(navController)
         }
 
+        // Przyciski Add – stara logika: tylko dla dzisiaj lub wczoraj
         val today = LocalDate.now()
         val showAddButton = !selectedDate.isBefore(today.minusDays(1))
-
         if (showAddButton) {
             Box(
                 modifier = Modifier
@@ -107,12 +104,11 @@ fun HabitsScreenInitialize(navController: NavController) {
                     .padding(bottom = 105.dp, end = 10.dp),
                 contentAlignment = Alignment.BottomEnd
             ) {
-                AddHabitButton {
-                    showSelection = true
-                }
+                AddHabitButton { showSelection = true }
             }
         }
 
+        // Dialogi
         if (showSelection) {
             HabitSelectionView(
                 predefinedHabits = viewModel.predefinedHabits,
@@ -133,12 +129,9 @@ fun HabitsScreenInitialize(navController: NavController) {
                     showAdditionDialog = false
                     showSelection = false
                 },
-                onDismiss = {
-                    showAdditionDialog = false
-                }
+                onDismiss = { showAdditionDialog = false }
             )
         }
-
 
         if (showDetailsDialog && selectedHabit != null) {
             HabitDetailsDialog(
@@ -147,10 +140,9 @@ fun HabitsScreenInitialize(navController: NavController) {
                     viewModel.deleteHabit(habit)
                     showDetailsDialog = false
                 },
-                onDismiss = {
-                    showDetailsDialog = false
-                }
+                onDismiss = { showDetailsDialog = false }
             )
         }
     }
 }
+

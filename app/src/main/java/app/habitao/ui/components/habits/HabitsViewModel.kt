@@ -1,26 +1,21 @@
 package app.habitao.ui.components.habits
 
 import android.app.Application
-import android.os.Build
-import androidx.annotation.RequiresApi
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.ListenerRegistration
 import kotlinx.coroutines.launch
 import java.time.LocalDate
-import kotlin.collections.iterator
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 
-@RequiresApi(Build.VERSION_CODES.O)
 class HabitsViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val habitsByDate = mutableMapOf<LocalDate, MutableList<Habit>>()
 
-    var habitsForSelectedDate by mutableStateOf<List<Habit>>(emptyList())
-        private set
-
-    @RequiresApi(Build.VERSION_CODES.O)
     val predefinedHabits = listOf(
         Habit(
             1,
@@ -152,63 +147,169 @@ class HabitsViewModel(application: Application) : AndroidViewModel(application) 
         ),
     )
 
+    var selectedDate by mutableStateOf(LocalDate.now())
+        private set
+
+    fun updateSelectedDate(date: LocalDate) {
+        selectedDate = date
+        loadHabitsForDate(date)
+    }
+
+    private val app = application
+    private val localRepo = LocalHabitRepository(application)
+    private val cloudRepo = CloudHabitRepository()
+    private val auth = FirebaseAuth.getInstance()
+
+    private var cloudListener: ListenerRegistration? = null
+
+    private val _habitsByDate = mutableMapOf<LocalDate, MutableList<Habit>>()
+    val habitsByDate get() = _habitsByDate
+
+    var habitsForSelectedDate by mutableStateOf<List<Habit>>(emptyList())
+        private set
+
+    private val currentRepo: HabitRepository
+        get() = if (auth.currentUser == null) localRepo else cloudRepo
+
     init {
+        // load initial data depending on auth state
         viewModelScope.launch {
-            val savedHabits = HabitDataStore.loadHabits(getApplication())
-            val grouped: Map<LocalDate, List<Habit>> = savedHabits.groupBy { habit -> habit.date }
-            for ((dateKey, list) in grouped) {
-                habitsByDate[dateKey] = list.toMutableList()
+            loadFromCurrentRepo()
+        }
+
+        // listen for auth changes to switch repo and (re)load + start/stop realtime accordingly
+        auth.addAuthStateListener { firebaseAuth ->
+            viewModelScope.launch {
+                if (firebaseAuth.currentUser != null) {
+                    // logged in -> start cloud realtime and load cloud data
+                    startCloudRealtime()
+                } else {
+                    // logged out -> stop cloud realtime and load local
+                    stopCloudRealtime()
+                    loadFromCurrentRepo()
+                }
             }
-            habitsForSelectedDate = habitsByDate[LocalDate.now()]?.toList() ?: emptyList()
         }
     }
+
+    private suspend fun loadFromCurrentRepo() = withContext(Dispatchers.IO) {
+        try {
+            val loaded = currentRepo.loadAll()
+            _habitsByDate.clear()
+            val grouped = loaded.groupBy { it.date }
+            for ((date, list) in grouped) {
+                _habitsByDate[date] = list.toMutableList()
+            }
+
+            // Zamiast przypisywać tylko do LocalDate.now(), aktualizuj habitsForSelectedDate dla wszystkich dat
+            withContext(Dispatchers.Main) {
+                // Jeśli wybrana data już istnieje w Compose, niech się od razu zaktualizuje
+                val today = LocalDate.now()
+                habitsForSelectedDate = _habitsByDate[today]?.toList() ?: emptyList()
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+
     fun loadHabitsForDate(date: LocalDate) {
-        habitsForSelectedDate = habitsByDate[date]?.toList() ?: emptyList()
+        habitsForSelectedDate = _habitsByDate[date]?.toList() ?: emptyList()
     }
 
     fun addHabit(date: LocalDate, habit: Habit) {
-        val list = habitsByDate.getOrPut(date) { mutableListOf() }
-        val newId = (habitsByDate.values.flatten().maxOfOrNull { it.id } ?: 0) + 1
-        val habitWithId = habit.copy(id = newId, date = date)
-        list.add(habitWithId)
-        habitsForSelectedDate = list.toList()
-        saveAllHabits()
+        viewModelScope.launch {
+            // Nadaj nowy unikalny ID
+            val all = _habitsByDate.values.flatten()
+            val newId = (all.maxOfOrNull { it.id } ?: 0) + 1
+            val habitWithId = habit.copy(id = newId, date = date)
+
+            // Dodaj do lokalnej mapy
+            val list = _habitsByDate.getOrPut(date) { mutableListOf() }
+            list.add(habitWithId)
+
+            // Aktualizuj listę wyświetlaną w UI tylko jeśli dodajesz do aktualnie wybranej daty
+            if (date == selectedDate) {
+                habitsForSelectedDate = list.toList()
+            }
+
+            // Zapisz habit w repo
+            try {
+                currentRepo.save(habitWithId)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
     }
 
+
+
     fun deleteHabit(habit: Habit) {
-        val date = habit.date
-        val list = habitsByDate[date]
-        if (list != null) {
-            list.removeAll { it.id == habit.id }
-            if (list.isEmpty()) {
-                habitsByDate.remove(date)
+        viewModelScope.launch {
+            val date = habit.date
+            val list = _habitsByDate[date]
+            if (list != null) {
+                list.removeAll { it.id == habit.id }
+                if (list.isEmpty()) _habitsByDate.remove(date)
+                if (date == habitsForSelectedDate.firstOrNull()?.date) {
+                    loadHabitsForDate(date)
+                }
             }
-            if (date == habitsForSelectedDate.firstOrNull()?.date) {
-                loadHabitsForDate(date)
+
+            try {
+                currentRepo.delete(habit.id)
+            } catch (e: Exception) {
+                e.printStackTrace()
             }
-            saveAllHabits()
         }
     }
 
     fun toggleHabitCompletion(habitId: Int) {
-        val entry = habitsByDate.entries.firstOrNull { it.value.any { h -> h.id == habitId } }
-        entry?.let { (dateKey, list) ->
-            val idx = list.indexOfFirst { it.id == habitId }
-            if (idx >= 0) {
-                val item = list[idx]
-                list[idx] = item.copy(isCompleted = !item.isCompleted)
-                if (habitsForSelectedDate.isNotEmpty() && dateKey == (habitsForSelectedDate.firstOrNull()?.date ?: dateKey)) {
-                    loadHabitsForDate(dateKey)
+        viewModelScope.launch {
+            val entry = _habitsByDate.entries.firstOrNull { it.value.any { h -> h.id == habitId } }
+            entry?.let { (dateKey, list) ->
+                val idx = list.indexOfFirst { it.id == habitId }
+                if (idx >= 0) {
+                    val item = list[idx]
+                    val changed = item.copy(isCompleted = !item.isCompleted)
+                    list[idx] = changed
+                    if (habitsForSelectedDate.isNotEmpty() && dateKey == (habitsForSelectedDate.firstOrNull()?.date ?: dateKey)) {
+                        loadHabitsForDate(dateKey)
+                    }
+                    try {
+                        currentRepo.save(changed)
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
                 }
-                saveAllHabits()
             }
         }
     }
 
-    private fun saveAllHabits() {
-        viewModelScope.launch {
-            val all = habitsByDate.values.flatten()
-            HabitDataStore.saveHabits(getApplication(), all)
+    private fun startCloudRealtime() {
+        // attach Firestore realtime listener — updates model when cloud changes
+        if (cloudListener != null) return
+
+        cloudListener = cloudRepo.startRealtimeListener { list ->
+            // this callback is in coroutine scope because in repo we launch a GlobalScope coroutine
+            viewModelScope.launch {
+                _habitsByDate.clear()
+                val grouped = list.groupBy { it.date }
+                for ((date, l) in grouped) {
+                    _habitsByDate[date] = l.toMutableList()
+                }
+                habitsForSelectedDate = _habitsByDate[selectedDate]?.toList() ?: emptyList()
+            }
         }
+    }
+
+    private fun stopCloudRealtime() {
+        cloudListener?.remove()
+        cloudListener = null
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        stopCloudRealtime()
     }
 }

@@ -12,24 +12,39 @@ import kotlinx.serialization.encoding.Encoder
 import java.time.LocalDate
 
 @Serializable
-data class Habit @RequiresApi(Build.VERSION_CODES.O) constructor(
-    val id: Int,
-    val name: String,
-    val description: String,
-    val element: Element,
-    var isPopular: Boolean,
+data class Habit  constructor(
+    val id: Int = 0,
+    val name: String = "",
+    val description: String = "",
+    val element: Element = Element.FIRE,
+    var isPopular: Boolean = false,
     val importance: Int = 1,
+
+    // ✔ DataStore serializacja (Kotlin Serialization)
     @Serializable(with = DateSerializer::class)
-    val date: LocalDate,
+    val date: LocalDate = LocalDate.now(),
+
     var isCompleted: Boolean = false
-)
+) {
+    // ✔ Ten empty constructor jest WYMAGANY przez Firestore
+    // Firestore go używa do tworzenia obiektu przy deserializacji
+    constructor() : this(
+        id = 0,
+        name = "",
+        description = "",
+        element = Element.FIRE,
+        isPopular = false,
+        importance = 1,
+        date = LocalDate.now(),
+        isCompleted = false
+    )
+}
 
 @Serializable
 enum class Element {
     FIRE, WATER, EARTH, AIR
 }
 
-@RequiresApi(Build.VERSION_CODES.O)
 object DateSerializer : KSerializer<LocalDate> {
     override val descriptor: SerialDescriptor =
         PrimitiveSerialDescriptor("LocalDate", PrimitiveKind.STRING)

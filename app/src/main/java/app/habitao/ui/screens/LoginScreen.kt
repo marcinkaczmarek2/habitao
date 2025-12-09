@@ -1,5 +1,6 @@
 package app.habitao.ui.screens
 
+import android.app.Application
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -16,18 +17,19 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import app.habitao.ui.components.settings.SettingsTopBar
 import app.habitao.R
-import app.habitao.ui.components.settings.AuthViewModel
+import app.habitao.ui.components.habits.AuthViewModel
 import app.habitao.ui.components.stats.AppLaunchDataStore
 import app.habitao.ui.theme.LocalAppColors
 import kotlinx.coroutines.launch
 
 @Composable
 fun LoginScreenInitialize(navController: NavController) {
-    val viewModel: AuthViewModel = viewModel()
+
     val colors = LocalAppColors.current
 
     var email by remember { mutableStateOf("") }
@@ -35,6 +37,9 @@ fun LoginScreenInitialize(navController: NavController) {
     var passwordVisible by remember { mutableStateOf(false) }
 
     val context = LocalContext.current
+    val viewModel: AuthViewModel = viewModel(
+        factory = ViewModelProvider.AndroidViewModelFactory(context.applicationContext as Application)
+    )
     val scope = rememberCoroutineScope()
 
     Box(

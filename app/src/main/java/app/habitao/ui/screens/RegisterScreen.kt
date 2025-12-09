@@ -1,5 +1,6 @@
 package app.habitao.ui.screens
 
+import android.app.Application
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -20,13 +21,17 @@ import app.habitao.R
 import app.habitao.ui.theme.LocalAppColors
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavOptions
-import app.habitao.ui.components.settings.AuthViewModel
+import app.habitao.ui.components.habits.AuthViewModel
 
 @Composable
 fun RegisterScreenInitialize(navController: NavController) {
-    val viewModel: AuthViewModel = viewModel()
+    val context = LocalContext.current
+    val viewModel: AuthViewModel = viewModel(
+        factory = ViewModelProvider.AndroidViewModelFactory(context.applicationContext as Application)
+    )
     var errorMessage by remember { mutableStateOf<String?>(null) }
     val colors = LocalAppColors.current
     var name by remember { mutableStateOf("") }
@@ -211,8 +216,7 @@ fun RegisterScreenInitialize(navController: NavController) {
 
             Spacer(modifier = Modifier.height(40.dp))
 
-            // REGISTER BUTTON
-            // REGISTER BUTTON
+            // REGISTER  REGISTER BUTTON
             Button(
                 onClick = {
                     if (password != confirmPassword) {

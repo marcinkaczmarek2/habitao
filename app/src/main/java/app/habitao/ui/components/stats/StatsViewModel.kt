@@ -20,8 +20,10 @@ class StatsViewModel(application: Application) : AndroidViewModel(application) {
 
     init {
         viewModelScope.launch {
-            val allHabits = HabitDataStore.loadHabits(getApplication())
-            updateStats(allHabits)
+            HabitDataStore.habitsFlow(getApplication())
+                .collect { allHabits ->
+                    updateStats(allHabits)
+                }
         }
     }
 
