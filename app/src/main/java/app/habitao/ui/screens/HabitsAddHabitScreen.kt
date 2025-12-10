@@ -271,6 +271,8 @@ fun HabitsAddHabitScreen(
                 fontSize = 14.sp,
                 lineHeight = 20.sp
             )
+
+            Spacer(modifier = Modifier.height(70.dp))
         }
 
             // Dół ekranu – przycisk "Save Habit"

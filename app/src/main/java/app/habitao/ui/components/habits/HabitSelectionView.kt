@@ -1,5 +1,6 @@
 package app.habitao.ui.components.habits
 
+import android.content.res.Configuration
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
@@ -15,6 +16,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.layout.RectRulers
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
@@ -47,12 +50,14 @@ fun HabitSelectionView(
         matchesSearch && matchesElement && matchesPopular
     }
 
+    //config for orientation
+    val conf = LocalConfiguration.current
+
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(colors.MainBackgroundColor)
             .padding(16.dp)
-            .padding(top = 40.dp)
     ) {
         Column(modifier = Modifier.fillMaxSize()) {
 
@@ -79,49 +84,102 @@ fun HabitSelectionView(
 
             Spacer(modifier = Modifier.height(12.dp))
 
-            OutlinedTextField(
-                value = searchQuery,
-                onValueChange = { searchQuery = it },
-                placeholder = { Text("Search habits...") },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(Color.Transparent),
-                singleLine = true,
-                colors = TextFieldDefaults.colors(
-                    focusedContainerColor = Color.Transparent,
-                    unfocusedContainerColor = Color.Transparent,
-                    focusedIndicatorColor = Color.LightGray,
-                    unfocusedIndicatorColor = Color.Gray,
-                    cursorColor = Color.LightGray,
-                    focusedTextColor = colors.HeaderColor,
-                    unfocusedTextColor = colors.HeaderColor,
-                    focusedPlaceholderColor = Color.Gray,
-                    unfocusedPlaceholderColor = Color.Gray
+            if (conf.orientation == Configuration.ORIENTATION_PORTRAIT) {
+                OutlinedTextField(
+                    value = searchQuery,
+                    onValueChange = { searchQuery = it },
+                    placeholder = { Text("Search habits...") },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(Color.Transparent),
+                    singleLine = true,
+                    colors = TextFieldDefaults.colors(
+                        focusedContainerColor = Color.Transparent,
+                        unfocusedContainerColor = Color.Transparent,
+                        focusedIndicatorColor = Color.LightGray,
+                        unfocusedIndicatorColor = Color.Gray,
+                        cursorColor = Color.LightGray,
+                        focusedTextColor = colors.HeaderColor,
+                        unfocusedTextColor = colors.HeaderColor,
+                        focusedPlaceholderColor = Color.Gray,
+                        unfocusedPlaceholderColor = Color.Gray
+                    )
                 )
-            )
 
-            Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(16.dp))
 
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceEvenly
-            ) {
-                Element.entries.forEach { element ->
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceEvenly
+                ) {
+                    Element.entries.forEach { element ->
+                        FilterChip(
+                            label = element.name.lowercase().replaceFirstChar { it.uppercase() },
+                            isSelected = selectedFilters.contains(element),
+                            onClick = {
+                                if (selectedFilters.contains(element)) selectedFilters.remove(element)
+                                else selectedFilters.add(element)
+                            }
+                        )
+                    }
+
                     FilterChip(
-                        label = element.name.lowercase().replaceFirstChar { it.uppercase() },
-                        isSelected = selectedFilters.contains(element),
-                        onClick = {
-                            if (selectedFilters.contains(element)) selectedFilters.remove(element)
-                            else selectedFilters.add(element)
-                        }
+                        label = "Popular",
+                        isSelected = showPopular,
+                        onClick = { showPopular = !showPopular }
                     )
                 }
+            }
+            else {
+                Row(
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    OutlinedTextField(
+                        value = searchQuery,
+                        onValueChange = { searchQuery = it },
+                        placeholder = { Text("Search habits...") },
+                        modifier = Modifier
+                            .background(Color.Transparent)
+                            .width(450.dp),
+                        singleLine = true,
+                        colors = TextFieldDefaults.colors(
+                            focusedContainerColor = Color.Transparent,
+                            unfocusedContainerColor = Color.Transparent,
+                            focusedIndicatorColor = Color.LightGray,
+                            unfocusedIndicatorColor = Color.Gray,
+                            cursorColor = Color.LightGray,
+                            focusedTextColor = colors.HeaderColor,
+                            unfocusedTextColor = colors.HeaderColor,
+                            focusedPlaceholderColor = Color.Gray,
+                            unfocusedPlaceholderColor = Color.Gray
+                        )
+                    )
 
-                FilterChip(
-                    label = "Popular",
-                    isSelected = showPopular,
-                    onClick = { showPopular = !showPopular }
-                )
+                    Row(
+                        modifier = Modifier
+                            .padding(top = 10.dp)
+                            .fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceEvenly
+                    ) {
+                        Element.entries.forEach { element ->
+                            FilterChip(
+                                label = element.name.lowercase().replaceFirstChar { it.uppercase() },
+                                isSelected = selectedFilters.contains(element),
+                                onClick = {
+                                    if (selectedFilters.contains(element)) selectedFilters.remove(element)
+                                    else selectedFilters.add(element)
+                                },
+
+                                )
+                        }
+
+                        FilterChip(
+                            label = "Popular",
+                            isSelected = showPopular,
+                            onClick = { showPopular = !showPopular }
+                        )
+                    }
+                }
             }
 
             Spacer(modifier = Modifier.height(12.dp))
