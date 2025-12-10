@@ -66,14 +66,14 @@ fun ChineseProverbView(
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .padding(10.dp)
+            .padding(horizontal = 10.dp, vertical = 2.dp)
     ) {
         BasicText(
             text = proverbOfTheDay,
             modifier = Modifier.padding(horizontal = 16.dp),
             style = MaterialTheme.typography.bodyLarge.copy(
                 color = colors.HeaderColor,
-                fontSize = 25.sp,
+                fontSize = 24.sp,
                 fontFamily = Saballing,
                 textAlign = TextAlign.Center
             )

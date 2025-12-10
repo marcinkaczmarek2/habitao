@@ -24,8 +24,15 @@ import app.habitao.ui.components.habits.HabitsViewModel
 import app.habitao.ui.components.habits.ChineseProverbView
 import java.time.LocalDate
 import android.app.Application
+import android.content.res.Configuration
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.width
+import androidx.compose.material3.VerticalDivider
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.lifecycle.ViewModelProvider
 import androidx.compose.ui.platform.LocalContext
 import app.habitao.ui.components.habits.AddHabitButton
@@ -53,6 +60,9 @@ fun HabitsScreenInitialize(navController: NavController) {
     // Używamy ViewModel.selectedDate, ale przy logice przycisku Add korzystamy ze starego kryterium
     val selectedDate = viewModel.selectedDate
 
+    //conf for orientation
+    val conf = LocalConfiguration.current
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -65,25 +75,52 @@ fun HabitsScreenInitialize(navController: NavController) {
                 .fillMaxSize()
                 .padding(bottom = 95.dp)
         ) {
-            // Calendar
-            CalendarView(
-                selectedDate = selectedDate,
-                onDateSelected = { viewModel.updateSelectedDate(it) }
-            )
+            if (conf.orientation == Configuration.ORIENTATION_PORTRAIT) {
+                // Calendar
+                CalendarView(
+                    selectedDate = selectedDate,
+                    onDateSelected = { viewModel.updateSelectedDate(it) }
+                )
 
-            // Chinese Proverb
-            ChineseProverbView(selectedDate = selectedDate)
+                // Chinese Proverb
+                ChineseProverbView(selectedDate = selectedDate)
 
-            // Lista habitów
-            HabitsListView(
-                habits = viewModel.habitsForSelectedDate,
-                onToggle = { viewModel.toggleHabitCompletion(it.id) },
-                onHabitClick = { habit ->
-                    selectedHabit = habit
-                    showDetailsDialog = true
-                },
-                onDelete = { viewModel.deleteHabit(it) }
-            )
+                // Lista habitów
+                HabitsListView(
+                    habits = viewModel.habitsForSelectedDate,
+                    onToggle = { viewModel.toggleHabitCompletion(it.id) },
+                    onHabitClick = { habit ->
+                        selectedHabit = habit
+                        showDetailsDialog = true
+                    },
+                    onDelete = { viewModel.deleteHabit(it) }
+                )
+            }
+            else {
+                Row(modifier = Modifier.fillMaxWidth()) {
+                    Column(modifier = Modifier.width(410.dp)) {
+                        // Calendar
+                        CalendarView(
+                            selectedDate = selectedDate,
+                            onDateSelected = { viewModel.updateSelectedDate(it) }
+                        )
+                        // Chinese Proverb
+                        ChineseProverbView(selectedDate = selectedDate)
+                    }
+                    Column(modifier = Modifier.fillMaxWidth()) {
+                        // Lista habitów
+                        HabitsListView(
+                            habits = viewModel.habitsForSelectedDate,
+                            onToggle = { viewModel.toggleHabitCompletion(it.id) },
+                            onHabitClick = { habit ->
+                                selectedHabit = habit
+                                showDetailsDialog = true
+                            },
+                            onDelete = { viewModel.deleteHabit(it) }
+                        )
+                    }
+                }
+            }
         }
 
         // Dolne menu
